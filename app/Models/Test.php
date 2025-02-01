@@ -15,6 +15,7 @@ class Test extends Model
         'values',
         'value_options',
         'project_id',
+        'is_ready',
     ];
 
     public function project()
@@ -25,5 +26,10 @@ class Test extends Model
     public function generalQuestions()
     {
         return $this->hasMany(GeneralQuestion::class);
+    }
+
+    public function valueQuestions()
+    {
+        return $this->hasMany(ValueQuestion::class);
     }
 }

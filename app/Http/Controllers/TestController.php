@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\Test;
 use App\Models\Project;
 use App\Models\GeneralQuestion;
+use App\Models\ValueQuestion;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Redirect;
@@ -15,6 +16,7 @@ class TestController extends Controller
         $tests = Test::with('project')->get();
         return Inertia::render('Tests/Index', [
             'tests' => $tests,
+            'csrf_token' => csrf_token(),
         ]);
     }
 
@@ -52,8 +54,9 @@ class TestController extends Controller
 
     public function show(Test $test)
     {
+        $test->load(['generalQuestions', 'valueQuestions']);
         return Inertia::render('Tests/Show', [
-            'test' => $test->load('generalQuestions'),
+            'test' => $test,
         ]);
     }
 
@@ -96,5 +99,24 @@ class TestController extends Controller
         $test->delete();
 
         return Redirect::route('tests.index')->with('success', 'Test deleted successfully.');
+    }
+
+    public function toggleReady(Test $test)
+    {
+        if (!$test->is_ready) {
+            // Generate records in the value_question table
+            $values = explode(',', $test->values);
+            foreach ($values as $value) {
+                ValueQuestion::create([
+                    'test_id' => $test->id,
+                    'name' => trim($value),
+                ]);
+            }
+        }
+
+        $test->is_ready = !$test->is_ready;
+        $test->save();
+
+        return Redirect::route('tests.index')->with('success', 'Test readiness status updated successfully.');
     }
 }
