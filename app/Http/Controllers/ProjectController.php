@@ -6,6 +6,8 @@ use App\Models\Project;
 use App\Models\Enterprise;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Inertia\Response;
+use Illuminate\Support\Facades\Redirect;
 
 class ProjectController extends Controller
 {
