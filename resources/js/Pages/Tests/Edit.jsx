@@ -12,6 +12,11 @@ export default function Edit() {
         values: test.values,
         value_options: test.value_options,
         project_id: test.project_id,
+        general_questions: test.general_questions.map(question => ({
+            id: question.id,
+            name: question.name,
+            options: question.options,
+        })),
     });
 
     const handleSubmit = (e) => {

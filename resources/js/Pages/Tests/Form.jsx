@@ -1,6 +1,26 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 export default function Form({ data, setData, errors, projects, handleSubmit, buttonText }) {
+    const [questions, setQuestions] = useState(data.general_questions || []);
+
+    useEffect(() => {
+        setData('general_questions', questions);
+    }, [questions]);
+
+    const addQuestion = () => {
+        setQuestions([...questions, { name: '', options: '' }]);
+    };
+
+    const removeQuestion = (index) => {
+        setQuestions(questions.filter((_, i) => i !== index));
+    };
+
+    const handleQuestionChange = (index, field, value) => {
+        const newQuestions = [...questions];
+        newQuestions[index][field] = value;
+        setQuestions(newQuestions);
+    };
+
     return (
         <form onSubmit={handleSubmit}>
             <div className="mb-4">
@@ -43,7 +63,29 @@ export default function Form({ data, setData, errors, projects, handleSubmit, bu
                 {errors.project_id && <div className="text-red-500 dark:text-red-300">{errors.project_id}</div>}
             </div>
 
-            <button type="submit" className="bg-blue-500 text-white p-2 rounded">{buttonText}</button>
+            <div className="mb-4">
+                <h4 className="text-lg font-semibold mb-2 text-gray-800 dark:text-gray-200">General Questions</h4>
+                {questions.map((question, index) => (
+                    <div key={index} className="mb-4 border p-4 rounded-md dark:bg-gray-700">
+                        <div className="mb-2">
+                            <label htmlFor={`question_name_${index}`} className="block text-gray-700 dark:text-gray-300">Question Name</label>
+                            <input type="text" id={`question_name_${index}`} placeholder="Question Name" className="border p-2 w-full dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200" 
+                                value={question.name} onChange={(e) => handleQuestionChange(index, 'name', e.target.value)} />
+                            {errors[`general_questions.${index}.name`] && <div className="text-red-500 dark:text-red-300">{errors[`general_questions.${index}.name`]}</div>}
+                        </div>
+                        <div className="mb-2">
+                            <label htmlFor={`question_options_${index}`} className="block text-gray-700 dark:text-gray-300">Options</label>
+                            <textarea id={`question_options_${index}`} placeholder="Options" className="border p-2 w-full dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200" 
+                                value={question.options} onChange={(e) => handleQuestionChange(index, 'options', e.target.value)}></textarea>
+                            {errors[`general_questions.${index}.options`] && <div className="text-red-500 dark:text-red-300">{errors[`general_questions.${index}.options`]}</div>}
+                        </div>
+                        <button type="button" className="bg-red-500 text-white px-4 py-2 rounded-md" onClick={() => removeQuestion(index)}>Remove</button>
+                    </div>
+                ))}
+                <button type="button" className="bg-green-500 text-white px-4 py-2 rounded-md" onClick={addQuestion}>Add Question</button>
+            </div>
+
+            <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded-md">{buttonText}</button>
         </form>
     );
 }

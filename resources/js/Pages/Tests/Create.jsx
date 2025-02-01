@@ -12,6 +12,7 @@ export default function Create() {
         values: '',
         value_options: '',
         project_id: '',
+        general_questions: [],
     });
 
     const handleSubmit = (e) => {

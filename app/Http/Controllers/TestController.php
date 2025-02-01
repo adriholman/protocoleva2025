@@ -1,9 +1,9 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Models\Test;
 use App\Models\Project;
+use App\Models\GeneralQuestion;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Redirect;
@@ -34,9 +34,18 @@ class TestController extends Controller
             'values' => 'required|string',
             'value_options' => 'required|string',
             'project_id' => 'required|exists:projects,id',
+            'general_questions' => 'array',
+            'general_questions.*.name' => 'required|string|max:255',
+            'general_questions.*.options' => 'required|string',
         ]);
 
-        Test::create($request->all());
+        $test = Test::create($request->only(['name', 'description', 'values', 'value_options', 'project_id']));
+
+        if ($request->has('general_questions')) {
+            foreach ($request->general_questions as $question) {
+                $test->generalQuestions()->create($question);
+            }
+        }
 
         return Redirect::route('tests.index')->with('success', 'Test created successfully.');
     }
@@ -44,7 +53,7 @@ class TestController extends Controller
     public function show(Test $test)
     {
         return Inertia::render('Tests/Show', [
-            'test' => $test,
+            'test' => $test->load('generalQuestions'),
         ]);
     }
 
@@ -52,7 +61,7 @@ class TestController extends Controller
     {
         $projects = Project::all();
         return Inertia::render('Tests/Edit', [
-            'test' => $test,
+            'test' => $test->load('generalQuestions'),
             'projects' => $projects,
         ]);
     }
@@ -65,9 +74,19 @@ class TestController extends Controller
             'values' => 'required|string',
             'value_options' => 'required|string',
             'project_id' => 'required|exists:projects,id',
+            'general_questions' => 'array',
+            'general_questions.*.name' => 'required|string|max:255',
+            'general_questions.*.options' => 'required|string',
         ]);
 
-        $test->update($request->all());
+        $test->update($request->only(['name', 'description', 'values', 'value_options', 'project_id']));
+
+        $test->generalQuestions()->delete();
+        if ($request->has('general_questions')) {
+            foreach ($request->general_questions as $question) {
+                $test->generalQuestions()->create($question);
+            }
+        }
 
         return Redirect::route('tests.index')->with('success', 'Test updated successfully.');
     }

@@ -21,4 +21,9 @@ class Test extends Model
     {
         return $this->belongsTo(Project::class);
     }
+
+    public function generalQuestions()
+    {
+        return $this->hasMany(GeneralQuestion::class);
+    }
 }
