@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Enterprises extends Model
+class Enterprise extends Model
 {
     use HasFactory;
 
@@ -13,9 +13,13 @@ class Enterprises extends Model
         'name',
         'description',
         'address',
-        'phone',
         'email',
         'website',
         'nif',
     ];
+
+    public function projects()
+    {
+        return $this->hasMany(Project::class);
+    }
 }
