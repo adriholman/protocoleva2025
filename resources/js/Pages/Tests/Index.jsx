@@ -24,7 +24,7 @@ export default function Index() {
                                 href="/tests/create" 
                                 className="bg-green-500 text-white px-4 py-2 rounded-md inline-flex items-center"
                             >
-                                <FaPlus className="mr-2" /> Nuevo Test
+                                <FaPlus className="mr-2" /> Crear
                             </Link>
                         </div>
 
