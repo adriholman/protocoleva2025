@@ -35,6 +35,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::resource('tests', TestController::class);
     Route::post('tests/{test}/toggle-ready', [TestController::class, 'toggleReady'])->name('tests.toggleReady');
+    Route::get('/tests/{id}/complete', [TestController::class, 'complete'])->name('tests.complete');
+    Route::post('/tests/{id}/submit', [TestController::class, 'submit'])->name('tests.submit');
     Route::resource('projects', ProjectController::class);
     Route::resource('enterprises', EnterpriseController::class);
 });

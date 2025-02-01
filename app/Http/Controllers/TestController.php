@@ -5,9 +5,12 @@ use App\Models\Test;
 use App\Models\Project;
 use App\Models\GeneralQuestion;
 use App\Models\ValueQuestion;
+use App\Models\ValueAnswer;
+use App\Models\GeneralAnswer;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Auth;
 
 class TestController extends Controller
 {
@@ -118,5 +121,45 @@ class TestController extends Controller
         $test->save();
 
         return Redirect::route('tests.index')->with('success', 'Test readiness status updated successfully.');
+    }
+
+    public function complete($id)
+    {
+        $test = Test::with(['project', 'generalQuestions', 'valueQuestions'])->findOrFail($id);
+        return Inertia::render('Tests/Complete', [
+            'test' => $test,
+        ]);
+    }
+
+    public function submit(Request $request, $id)
+    {
+        $request->validate([
+            'general_answers' => 'required|array',
+            'general_answers.*.question_id' => 'required|exists:general_questions,id',
+            'general_answers.*.answer' => 'required|string',
+            'value_answers' => 'required|array',
+            'value_answers.*.question_id' => 'required|exists:value_questions,id',
+            'value_answers.*.answer' => 'required|string',
+        ]);
+
+        $user = Auth::user();
+
+        foreach ($request->general_answers as $answer) {
+            GeneralAnswer::create([
+                'user_id' => $user->id,
+                'general_question_id' => $answer['question_id'],
+                'answer' => $answer['answer'],
+            ]);
+        }
+
+        foreach ($request->value_answers as $answer) {
+            ValueAnswer::create([
+                'user_id' => $user->id,
+                'value_question_id' => $answer['question_id'],
+                'answer' => $answer['answer'],
+            ]);
+        }
+
+        return redirect()->route('tests.index')->with('success', 'Test completed successfully.');
     }
 }

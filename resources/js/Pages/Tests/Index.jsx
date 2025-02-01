@@ -37,7 +37,11 @@ export default function Index() {
                                         <td className="border p-2 text-gray-800 dark:text-gray-200">{test.is_ready ? 'Yes' : 'No'}</td>
                                         <td className="border p-2 text-gray-800 dark:text-gray-200">
                                             {test.is_ready ? (
-                                                <Link href={`/tests/${test.id}`} className="text-blue-500 dark:text-blue-300">Show</Link>
+                                                    <>                                                
+                                                        <Link href={`/tests/${test.id}`} className="text-blue-500 dark:text-blue-300">Show</Link>
+                                                        <Link href={`/tests/${test.id}/complete`} className="text-green-500 dark:text-green-300">Complete</Link>
+                                                    </>
+
                                             ) : (
                                                 <>
                                                     <Link href={`/tests/${test.id}/edit`} className="text-blue-500 dark:text-blue-300">Edit</Link>
