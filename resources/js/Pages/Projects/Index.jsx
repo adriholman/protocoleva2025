@@ -20,6 +20,7 @@ export default function ProjectsIndex({ projects }) {
                                     <th className="border p-2 text-gray-800 dark:text-gray-200">Name</th>
                                     <th className="border p-2 text-gray-800 dark:text-gray-200">Description</th>
                                     <th className="border p-2 text-gray-800 dark:text-gray-200">Enterprise</th>
+                                    <th className="border p-2 text-gray-800 dark:text-gray-200">Test Limit</th> {/* Add this line */}
                                     <th className="border p-2 text-gray-800 dark:text-gray-200">Actions</th>
                                 </tr>
                             </thead>
@@ -29,6 +30,7 @@ export default function ProjectsIndex({ projects }) {
                                         <td className="border p-2 text-gray-800 dark:text-gray-200">{project.name}</td>
                                         <td className="border p-2 text-gray-800 dark:text-gray-200">{project.description}</td>
                                         <td className="border p-2 text-gray-800 dark:text-gray-200">{project.enterprise.name}</td>
+                                        <td className="border p-2 text-gray-800 dark:text-gray-200">{project.test_limit}</td> {/* Add this line */}
                                         <td className="border p-2 text-gray-800 dark:text-gray-200">
                                             <Link href={`/projects/${project.id}/edit`} className="text-blue-500 dark:text-blue-300">Edit</Link>
                                             <form action={`/projects/${project.id}`} method="POST" style={{ display: 'inline' }}>
@@ -39,7 +41,7 @@ export default function ProjectsIndex({ projects }) {
                                     </tr>
                                 )) : (
                                     <tr>
-                                        <td colSpan="4" className="border p-2 text-gray-800 dark:text-gray-200">No projects found.</td>
+                                        <td colSpan="5" className="border p-2 text-gray-800 dark:text-gray-200">No projects found.</td> {/* Update colSpan */}
                                     </tr>
                                 )}
                             </tbody>

@@ -10,6 +10,7 @@ export default function Edit() {
         name: project.name,
         description: project.description,
         enterprise_id: project.enterprise_id,
+        test_limit: project.test_limit,
     });
 
     const handleSubmit = (e) => {

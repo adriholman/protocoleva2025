@@ -12,6 +12,7 @@ class Project extends Model
         'name',
         'description',
         'enterprise_id',
+        'test_limit',
     ];
 
     public function enterprise()

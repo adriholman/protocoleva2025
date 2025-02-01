@@ -29,6 +29,13 @@ export default function Form({ data, setData, errors, enterprises, handleSubmit,
                 {errors.enterprise_id && <div className="text-red-500 dark:text-red-300">{errors.enterprise_id}</div>}
             </div>
 
+            <div className="mb-4">
+                <label htmlFor="test_limit" className="block text-gray-700 dark:text-gray-300">Test Limit</label>
+                <input type="number" id="test_limit" placeholder="Test Limit" className="border p-2 w-full dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200" 
+                    value={data.test_limit} onChange={(e) => setData('test_limit', e.target.value)} />
+                {errors.test_limit && <div className="text-red-500 dark:text-red-300">{errors.test_limit}</div>}
+            </div>
+
             <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded-md">{buttonText}</button>
         </form>
     );

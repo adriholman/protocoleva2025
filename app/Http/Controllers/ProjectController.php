@@ -32,6 +32,7 @@ class ProjectController extends Controller
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
             'enterprise_id' => 'required|exists:enterprises,id',
+            'test_limit' => 'required|integer',
         ]);
 
         Project::create($request->all());
@@ -61,6 +62,7 @@ class ProjectController extends Controller
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
             'enterprise_id' => 'required|exists:enterprises,id',
+            'test_limit' => 'required|integer',
         ]);
 
         $project->update($request->all());

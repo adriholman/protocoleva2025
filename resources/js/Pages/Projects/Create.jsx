@@ -10,6 +10,7 @@ export default function Create() {
         name: '',
         description: '',
         enterprise_id: '',
+        test_limit: '',
     });
 
     const handleSubmit = (e) => {
