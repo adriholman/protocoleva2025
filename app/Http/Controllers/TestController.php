@@ -7,10 +7,12 @@ use App\Models\GeneralQuestion;
 use App\Models\ValueQuestion;
 use App\Models\ValueAnswer;
 use App\Models\GeneralAnswer;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class TestController extends Controller
 {
@@ -161,5 +163,35 @@ class TestController extends Controller
         }
 
         return redirect()->route('tests.index')->with('success', 'Test completed successfully.');
+    }
+
+    public function invite($id)
+    {
+        $test = Test::findOrFail($id);
+        $invitedUsers = DB::table('user_test')->where('test_id', $id)->pluck('user_id')->toArray();
+        $users = User::whereNotIn('id', $invitedUsers)->get();
+
+        return Inertia::render('Tests/Invite', [
+            'test' => $test,
+            'users' => $users,
+        ]);
+    }
+
+    public function sendInvites(Request $request, $id)
+    {
+        $request->validate([
+            'user_ids' => 'required|array',
+            'user_ids.*' => 'exists:users,id',
+        ]);
+
+        foreach ($request->user_ids as $userId) {
+            DB::table('user_test')->insert([
+                'user_id' => $userId,
+                'test_id' => $id,
+                'completed' => false,
+            ]);
+        }
+
+        return redirect()->route('tests.index')->with('success', 'Users invited successfully.');
     }
 }

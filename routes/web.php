@@ -37,6 +37,8 @@ Route::middleware('auth')->group(function () {
     Route::post('tests/{test}/toggle-ready', [TestController::class, 'toggleReady'])->name('tests.toggleReady');
     Route::get('/tests/{id}/complete', [TestController::class, 'complete'])->name('tests.complete');
     Route::post('/tests/{id}/submit', [TestController::class, 'submit'])->name('tests.submit');
+    Route::get('/tests/{id}/invite', [TestController::class, 'invite'])->name('tests.invite');
+    Route::post('/tests/{id}/send-invites', [TestController::class, 'sendInvites'])->name('tests.sendInvites');
     Route::resource('projects', ProjectController::class);
     Route::resource('enterprises', EnterpriseController::class);
 });

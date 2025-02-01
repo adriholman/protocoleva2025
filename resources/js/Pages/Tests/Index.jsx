@@ -33,18 +33,18 @@ export default function Index() {
                                     <tr key={test.id} className="text-center bg-white dark:bg-gray-800">
                                         <td className="border p-2 text-gray-800 dark:text-gray-200">{test.name}</td>
                                         <td className="border p-2 text-gray-800 dark:text-gray-200">{test.description}</td>
-                                        <td className="border p-2 text-gray-800 dark:text-gray-200">{test.project.name}</td>
+                                        <td className="border p-2 text-gray-800 dark:text-gray-200">{test.project?.name || 'No project assigned'}</td>
                                         <td className="border p-2 text-gray-800 dark:text-gray-200">{test.is_ready ? 'Yes' : 'No'}</td>
                                         <td className="border p-2 text-gray-800 dark:text-gray-200">
                                             {test.is_ready ? (
-                                                    <>                                                
-                                                        <Link href={`/tests/${test.id}`} className="text-blue-500 dark:text-blue-300">Show</Link>
-                                                        <Link href={`/tests/${test.id}/complete`} className="text-green-500 dark:text-green-300">Complete</Link>
-                                                    </>
-
+                                                <>
+                                                    <Link href={`/tests/${test.id}`} className="text-blue-500 dark:text-blue-300 mr-2">Show</Link>
+                                                    <Link href={`/tests/${test.id}/complete`} className="text-green-500 dark:text-green-300 mr-2">Complete</Link>
+                                                    <Link href={`/tests/${test.id}/invite`} className="text-yellow-500 dark:text-yellow-300">Invite</Link>
+                                                </>
                                             ) : (
                                                 <>
-                                                    <Link href={`/tests/${test.id}/edit`} className="text-blue-500 dark:text-blue-300">Edit</Link>
+                                                    <Link href={`/tests/${test.id}/edit`} className="text-blue-500 dark:text-blue-300 mr-2">Edit</Link>
                                                     <form action={`/tests/${test.id}/toggle-ready`} method="POST" style={{ display: 'inline' }}>
                                                         <input type="hidden" name="_token" value={csrf_token} />
                                                         <button type="submit" className="text-green-500 dark:text-green-300 ml-2">
@@ -54,7 +54,9 @@ export default function Index() {
                                                     <form action={`/tests/${test.id}`} method="POST" style={{ display: 'inline' }}>
                                                         <input type="hidden" name="_token" value={csrf_token} />
                                                         <input type="hidden" name="_method" value="DELETE" />
-                                                        <button type="submit" className="text-red-500 dark:text-red-300 ml-2">Delete</button>
+                                                        <button type="submit" className="text-red-500 dark:text-red-300 ml-2">
+                                                            Delete
+                                                        </button>
                                                     </form>
                                                 </>
                                             )}
