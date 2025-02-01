@@ -19,6 +19,11 @@ export default function EnterprisesIndex({ enterprises }) {
                                 <tr className="bg-gray-100 dark:bg-gray-700">
                                     <th className="border p-2">Name</th>
                                     <th className="border p-2">Email</th>
+                                    <th className="border p-2">NIF</th>
+                                    <th className="border p-2">Description</th>
+                                    <th className="border p-2">Address</th>
+                                    <th className="border p-2">Phone</th>
+                                    <th className="border p-2">Website</th>
                                     <th className="border p-2">Actions</th>
                                 </tr>
                             </thead>
@@ -27,13 +32,18 @@ export default function EnterprisesIndex({ enterprises }) {
                                     <tr key={enterprise.id} className="text-center">
                                         <td className="border p-2">{enterprise.name}</td>
                                         <td className="border p-2">{enterprise.email}</td>
+                                        <td className="border p-2">{enterprise.nif}</td>
+                                        <td className="border p-2">{enterprise.description}</td>
+                                        <td className="border p-2">{enterprise.address}</td>
+                                        <td className="border p-2">{enterprise.phone}</td>
+                                        <td className="border p-2"><a href={enterprise.website} className="text-blue-500" target="_blank" rel="noopener noreferrer">{enterprise.website}</a></td>
                                         <td className="border p-2">
                                             <Link href={`/enterprises/${enterprise.id}/edit`} className="text-blue-500">Edit</Link>
                                         </td>
                                     </tr>
                                 )) : (
                                     <tr>
-                                        <td colSpan="3" className="border p-2 text-center text-gray-500">No enterprises found.</td>
+                                        <td colSpan="8" className="border p-2 text-center text-gray-500">No enterprises found.</td>
                                     </tr>
                                 )}
                             </tbody>
@@ -44,4 +54,3 @@ export default function EnterprisesIndex({ enterprises }) {
         </AuthenticatedLayout>
     );
 }
-
