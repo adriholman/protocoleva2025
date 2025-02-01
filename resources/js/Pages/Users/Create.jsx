@@ -21,9 +21,9 @@ export default function Create({ roles, enterprises }) {
 
     return (
         <AuthenticatedLayout
-            header={<h2 className="text-xl font-semibold leading-tight text-gray-800 dark:text-gray-200">Create User</h2>}
+            header={<h2 className="text-xl font-semibold leading-tight text-gray-800 dark:text-gray-200">Crear Usuario</h2>}
         >
-            <Head title="Create User" />
+            <Head title="Create Usuario" />
 
             <div className="py-12">
                 <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
