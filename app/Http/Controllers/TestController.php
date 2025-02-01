@@ -54,7 +54,7 @@ class TestController extends Controller
 
     public function show(Test $test)
     {
-        $test->load(['generalQuestions', 'valueQuestions']);
+        $test->load(['project','generalQuestions', 'valueQuestions']);
         return Inertia::render('Tests/Show', [
             'test' => $test,
         ]);
