@@ -56,6 +56,9 @@ export default function Dashboard() {
                         <Link href={route('projects.index')} className="bg-blue-500 text-white px-4 py-2 rounded-md">
                             View Projects
                         </Link>
+                        <Link href={route('tests.index')} className="bg-blue-500 text-white px-4 py-2 rounded-md">
+                            View Tests
+                        </Link>
 
 
                         </div>

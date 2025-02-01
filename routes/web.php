@@ -8,6 +8,7 @@ use Inertia\Response;
 use App\Http\Controllers\EnterpriseController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\TestController;
 
 // Redirect the root URL to the login page
 Route::get('/', function () {
@@ -32,6 +33,7 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::get('/usuarios', [UserController::class, 'index'])->name('usuarios.index');
+    Route::resource('tests', TestController::class);
     Route::resource('projects', ProjectController::class);
     Route::resource('enterprises', EnterpriseController::class);
 });

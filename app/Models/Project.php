@@ -19,4 +19,9 @@ class Project extends Model
     {
         return $this->belongsTo(Enterprise::class);
     }
+
+    public function tests()
+    {
+        return $this->hasMany(Test::class);
+    }
 }
