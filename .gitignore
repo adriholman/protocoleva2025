@@ -24,3 +24,4 @@ Homestead.json
 
 # Build files
 build/
+/public
