@@ -3,26 +3,90 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Role;
+use App\Models\Enterprise;
 use Inertia\Inertia;
-use Inertia\Response;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Redirect;
 
 class UserController extends Controller
 {
-    /**
-     * Muestra la lista de usuarios con sus roles.
-     */
     public function index()
     {
-        $users = User::with('role')->get()->map(function ($user) {
-            return [
-                'id' => $user->id,
-                'name' => $user->name,
-                'email' => $user->email,
-                'role' => $user->role ? $user->role->name : 'Sin rol'
-            ];
-        });
-    
-        return response()->json(['users' => $users]);
+        $users = User::with(['role', 'enterprise'])->get();
+        return Inertia::render('Users/Index', [
+            'users' => $users,
+        ]);
     }
-}    
+
+    public function create()
+    {
+        $roles = Role::all();
+        $enterprises = Enterprise::all();
+        return Inertia::render('Users/Create', [
+            'roles' => $roles,
+            'enterprises' => $enterprises,
+        ]);
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:8|confirmed',
+            'role_id' => 'required|exists:roles,id',
+            'enterprise_id' => 'nullable|exists:enterprises,id',
+        ]);
+
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'role_id' => $request->role_id,
+            'enterprise_id' => $request->enterprise_id,
+        ]);
+
+        return Redirect::route('users.index')->with('success', 'User created successfully.');
+    }
+
+    public function edit(User $user)
+    {
+        $roles = Role::all();
+        $enterprises = Enterprise::all();
+        return Inertia::render('Users/Edit', [
+            'user' => $user,
+            'roles' => $roles,
+            'enterprises' => $enterprises,
+        ]);
+    }
+
+    public function update(Request $request, User $user)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
+            'password' => 'nullable|string|min:8|confirmed',
+            'role_id' => 'required|exists:roles,id',
+            'enterprise_id' => 'nullable|exists:enterprises,id',
+        ]);
+
+        $user->update([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => $request->password ? Hash::make($request->password) : $user->password,
+            'role_id' => $request->role_id,
+            'enterprise_id' => $request->enterprise_id,
+        ]);
+
+        return Redirect::route('users.index')->with('success', 'User updated successfully.');
+    }
+
+    public function destroy(User $user)
+    {
+        $user->delete();
+
+        return Redirect::route('users.index')->with('success', 'User deleted successfully.');
+    }
+}

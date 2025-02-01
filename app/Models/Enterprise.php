@@ -17,6 +17,11 @@ class Enterprise extends Model
         'nif',
     ];
 
+    public function users(): HasMany
+    {
+        return $this->hasMany(User::class);
+    }
+
     public function projects()
     {
         return $this->hasMany(Project::class);

@@ -29,10 +29,10 @@ Route::post('/register', function () {
 });
 
 Route::middleware('auth')->group(function () {
+    Route::resource('users', UserController::class);
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    Route::get('/usuarios', [UserController::class, 'index'])->name('usuarios.index');
     Route::resource('tests', TestController::class);
     Route::post('tests/{test}/toggle-ready', [TestController::class, 'toggleReady'])->name('tests.toggleReady');
     Route::resource('projects', ProjectController::class);

@@ -1,21 +1,7 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head, Link } from '@inertiajs/react';
-import { useEffect, useState } from 'react';
-import axios from 'axios';
+import { Head } from '@inertiajs/react';
 
 export default function Dashboard() {
-    const [users, setUsers] = useState([]);
-
-    useEffect(() => {
-        axios.get('/usuarios')
-            .then(response => {
-                setUsers(response.data.users);
-            })
-            .catch(error => {
-                console.error('Error fetching users:', error);
-            });
-    }, []);
-
     return (
         <AuthenticatedLayout
             header={
@@ -28,26 +14,10 @@ export default function Dashboard() {
 
             <div className="py-12">
                 <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
-                    <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg dark:bg-gray-800 p-6">
-                        <h3 className="text-lg font-semibold mb-4">Lista de Usuarios con Roles</h3>
-                        <table className="w-full border-collapse border border-gray-300">
-                            <thead>
-                                <tr className="bg-gray-100 dark:bg-gray-700">
-                                    <th className="border p-2">Nombre</th>
-                                    <th className="border p-2">Correo</th>
-                                    <th className="border p-2">Rol</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {users.map(user => (
-                                    <tr key={user.id} className="text-center">
-                                        <td className="border p-2">{user.name}</td>
-                                        <td className="border p-2">{user.email}</td>
-                                        <td className="border p-2">{user.role}</td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
+                    <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg dark:bg-gray-800">
+                        <div className="p-6 text-gray-900 dark:text-gray-100">
+                            You're logged in!
+                        </div>
                     </div>
                 </div>
             </div>

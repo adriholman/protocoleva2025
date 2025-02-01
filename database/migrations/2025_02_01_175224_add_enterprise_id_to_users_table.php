@@ -11,10 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('user_enterprise', function (Blueprint $table) {
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->foreignId('enterprise_id')->constrained()->onDelete('cascade');
-            $table->timestamps();
+        Schema::table('users', function (Blueprint $table) {
+            $table->foreignId('enterprise_id')->nullable()->constrained()->onDelete('set null');
         });
     }
 
@@ -23,6 +21,9 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('user_enterprise');
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropForeign(['enterprise_id']);
+            $table->dropColumn('enterprise_id');
+        });
     }
 };
