@@ -17,7 +17,8 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->text('values');
             $table->text('value_options');
-            $table->foreignId('enterprise_id')->constrained()->onDelete('cascade');
+            $table->integer('test_limit');
+            $table->foreignId('project_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }
