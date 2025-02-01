@@ -5,6 +5,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Inertia\Response;
+use App\Http\Controllers\EnterpriseController;
 use App\Http\Controllers\UserController;
 // Redirect the root URL to the login page
 Route::get('/', function () {
@@ -29,7 +30,7 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::get('/usuarios', [UserController::class, 'index'])->name('usuarios.index');
-
+    Route::resource('enterprises', EnterpriseController::class);
 });
 
 require __DIR__.'/auth.php';

@@ -9,14 +9,12 @@ export default function Dashboard() {
     useEffect(() => {
         axios.get('/usuarios')
             .then(response => {
-                console.log('Usuarios recibidos:', response.data); // Verifica si llegan datos
                 setUsers(response.data.users);
             })
             .catch(error => {
                 console.error('Error fetching users:', error);
             });
     }, []);
-    
 
     return (
         <AuthenticatedLayout
@@ -31,7 +29,7 @@ export default function Dashboard() {
             <div className="py-12">
                 <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
                     <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg dark:bg-gray-800 p-6">
-                        <h3 className="text-lg font-semibold mb-4">Lista de Usuarios Registrados</h3>
+                        <h3 className="text-lg font-semibold mb-4">Lista de Usuarios con Roles</h3>
                         <table className="w-full border-collapse border border-gray-300">
                             <thead>
                                 <tr className="bg-gray-100 dark:bg-gray-700">
@@ -50,6 +48,14 @@ export default function Dashboard() {
                                 ))}
                             </tbody>
                         </table>
+                        
+                        <div className="mt-6">
+                        <Link href={route('enterprises.index')} className="bg-blue-500 text-white px-4 py-2 rounded-md">
+                            View Enterprises
+                        </Link>
+
+
+                        </div>
                     </div>
                 </div>
             </div>
