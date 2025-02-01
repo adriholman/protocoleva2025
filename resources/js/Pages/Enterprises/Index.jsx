@@ -39,10 +39,6 @@ export default function EnterprisesIndex({ enterprises }) {
                                         <td className="border p-2 text-gray-800 dark:text-gray-200">{enterprise.website}</td>
                                         <td className="border p-2 text-gray-800 dark:text-gray-200">
                                             <Link href={`/enterprises/${enterprise.id}/edit`} className="text-blue-500 dark:text-blue-300">Edit</Link>
-                                            <form action={`/enterprises/${enterprise.id}`} method="POST" style={{ display: 'inline' }}>
-                                                <input type="hidden" name="_method" value="DELETE" />
-                                                <button type="submit" className="text-red-500 dark:text-red-300 ml-2">Delete</button>
-                                            </form>
                                         </td>
                                     </tr>
                                 )) : (
