@@ -6,7 +6,6 @@ use App\Models\Project;
 use App\Models\Enterprise;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-use Inertia\Response;
 use Illuminate\Support\Facades\Redirect;
 
 class ProjectController extends Controller
@@ -37,7 +36,7 @@ class ProjectController extends Controller
 
         Project::create($request->all());
 
-        return redirect()->route('projects.index')->with('success', 'Project created successfully.');
+        return Redirect::route('projects.index')->with('success', 'Project created successfully.');
     }
 
     public function show(Project $project)
@@ -66,13 +65,13 @@ class ProjectController extends Controller
 
         $project->update($request->all());
 
-        return redirect()->route('projects.index')->with('success', 'Project updated successfully.');
+        return Redirect::route('projects.index')->with('success', 'Project updated successfully.');
     }
 
     public function destroy(Project $project)
     {
         $project->delete();
 
-        return redirect()->route('projects.index')->with('success', 'Project deleted successfully.');
+        return Redirect::route('projects.index')->with('success', 'Project deleted successfully.');
     }
 }

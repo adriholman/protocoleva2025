@@ -7,6 +7,8 @@ use Inertia\Inertia;
 use Inertia\Response;
 use App\Http\Controllers\EnterpriseController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ProjectController;
+
 // Redirect the root URL to the login page
 Route::get('/', function () {
     return redirect('/login');
@@ -30,9 +32,8 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::get('/usuarios', [UserController::class, 'index'])->name('usuarios.index');
-    Route::resource('enterprises', EnterpriseController::class);
     Route::resource('projects', ProjectController::class);
-    Route::get('/usuarios', [UserController::class, 'index'])->name('usuarios.index');
+    Route::resource('enterprises', EnterpriseController::class);
 });
 
 require __DIR__.'/auth.php';
