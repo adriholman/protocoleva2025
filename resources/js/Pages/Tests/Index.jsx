@@ -2,10 +2,10 @@ import React from 'react';
 import { usePage, Link } from '@inertiajs/react';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head } from '@inertiajs/react';
-import { FaUserEdit, FaPlus } from 'react-icons/fa';
+import { FaUserEdit, FaPlus, FaEye, FaPlay, FaShareAlt, FaTrash } from 'react-icons/fa';
 
 export default function Index() {
-    const { tests } = usePage().props;
+    const { tests, csrf_token } = usePage().props;
 
     return (
         <AuthenticatedLayout
@@ -16,6 +16,7 @@ export default function Index() {
             <div className="py-12">
                 <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
                     <div className="bg-white shadow-sm sm:rounded-lg dark:bg-gray-800 p-6">
+                        
                         {/* Contenedor para Título y Botón */}
                         <div className="flex justify-between items-center mb-4">
                             <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200">Lista de Tests</h3>
@@ -23,7 +24,7 @@ export default function Index() {
                                 href="/tests/create" 
                                 className="bg-green-500 text-white px-4 py-2 rounded-md inline-flex items-center"
                             >
-                                <FaPlus className="mr-2" /> Crear
+                                <FaPlus className="mr-2" /> Nuevo Test
                             </Link>
                         </div>
 
@@ -34,7 +35,7 @@ export default function Index() {
                                     <th className="border p-2 text-gray-800 dark:text-gray-200">Nombre</th>
                                     <th className="border p-2 text-gray-800 dark:text-gray-200">Descripción</th>
                                     <th className="border p-2 text-gray-800 dark:text-gray-200">Proyecto</th>
-                                    <th className="border p-2 text-gray-800 dark:text-gray-200">¿Está Listo?</th>
+                                    <th className="border p-2 text-gray-800 dark:text-gray-200">Está Listo</th>
                                     <th className="border p-2 text-gray-800 dark:text-gray-200 text-center">Acciones</th>
                                 </tr>
                             </thead>
@@ -43,12 +44,40 @@ export default function Index() {
                                     <tr key={test.id} className="text-center bg-white dark:bg-gray-800">
                                         <td className="border p-2 text-gray-800 dark:text-gray-200">{test.name}</td>
                                         <td className="border p-2 text-gray-800 dark:text-gray-200">{test.description}</td>
-                                        <td className="border p-2 text-gray-800 dark:text-gray-200">{test.project?.name || 'Sin proyecto asignado'}</td>
+                                        <td className="border p-2 text-gray-800 dark:text-gray-200">{test.project?.name || 'Sin proyecto'}</td>
                                         <td className="border p-2 text-gray-800 dark:text-gray-200">{test.is_ready ? 'Sí' : 'No'}</td>
-                                        <td className="border p-2 text-gray-800 dark:text-gray-200 text-center">
-                                            <Link href={`/tests/${test.id}/edit`} className="inline-flex justify-center">
-                                                <FaUserEdit size={18} className="text-blue-500 dark:text-blue-300" />
-                                            </Link>
+                                        <td className="border-0 p-2 text-gray-800 dark:text-gray-200 flex justify-center space-x-4">
+                                            {/* Si el test está listo, mostrar Ver, Completar e Invitar */}
+                                            {test.is_ready ? (
+                                                <>
+                                                    <Link href={`/tests/${test.id}`} className="text-blue-500 dark:text-blue-300 hover:scale-110 transition-transform">
+                                                        <FaEye size={20} />
+                                                    </Link>
+                                                    <Link href={`/tests/${test.id}/complete`} className="text-green-500 dark:text-green-300 hover:scale-110 transition-transform">
+                                                        <FaPlay size={20} />
+                                                    </Link>
+                                                    <Link href={`/tests/${test.id}/invite`} className="text-yellow-500 dark:text-yellow-300 hover:scale-110 transition-transform">
+                                                        <FaShareAlt size={20} />
+                                                    </Link>
+                                                </>
+                                            ) : (
+                                                /* Si el test NO está listo, mostrar Editar, Ver y Eliminar */
+                                                <>
+                                                    <Link href={`/tests/${test.id}/edit`} className="text-blue-500 dark:text-blue-300 hover:scale-110 transition-transform">
+                                                        <FaUserEdit size={20} />
+                                                    </Link>
+                                                    <Link href={`/tests/${test.id}`} className="text-blue-500 dark:text-blue-300 hover:scale-110 transition-transform">
+                                                        <FaEye size={20} />
+                                                    </Link>
+                                                    <form action={`/tests/${test.id}`} method="POST" className="inline">
+                                                        <input type="hidden" name="_token" value={csrf_token} />
+                                                        <input type="hidden" name="_method" value="DELETE" />
+                                                        <button type="submit" className="text-red-500 dark:text-red-300 hover:scale-110 transition-transform">
+                                                            <FaTrash size={20} />
+                                                        </button>
+                                                    </form>
+                                                </>
+                                            )}
                                         </td>
                                     </tr>
                                 )) : (
@@ -78,3 +107,4 @@ export default function Index() {
         </AuthenticatedLayout>
     );
 }
+
