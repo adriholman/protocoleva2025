@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from '@inertiajs/react';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head } from '@inertiajs/react';
-import { FaUserEdit, FaPlus } from 'react-icons/fa';
+import { FaEdit, FaPlus } from 'react-icons/fa';
 
 export default function EnterprisesIndex({ enterprises }) {
     return (
@@ -56,7 +56,7 @@ export default function EnterprisesIndex({ enterprises }) {
                                         </td>
                                         <td className="border-0 p-2 text-gray-800 dark:text-gray-200 flex justify-center">
                                             <Link href={`/enterprises/${enterprise.id}/edit`} className="text-blue-500 dark:text-blue-300 hover:scale-110 transition-transform">
-                                                <FaUserEdit size={20} />
+                                                <FaEdit size={20} />
                                             </Link>
                                         </td>
                                     </tr>

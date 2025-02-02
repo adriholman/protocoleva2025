@@ -2,7 +2,7 @@ import React from 'react';
 import { usePage, Link } from '@inertiajs/react';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head } from '@inertiajs/react';
-import { FaUserEdit, FaPlus } from 'react-icons/fa';
+import { FaEdit, FaPlus } from 'react-icons/fa';
 
 export default function Index() {
     const { users } = usePage().props;
@@ -47,7 +47,7 @@ export default function Index() {
                                         <td className="border p-2 text-gray-800 dark:text-gray-200">{user.enterprise ? user.enterprise.name : 'Sin empresa'}</td>
                                         <td className="border p-2 text-gray-800 dark:text-gray-200 text-center">
                                             <Link href={`/users/${user.id}/edit`} className="inline-flex justify-center">
-                                                <FaUserEdit size={18} className="text-blue-500 dark:text-blue-300" />
+                                                <FaEdit size={18} className="text-blue-500 dark:text-blue-300" />
                                             </Link>
                                         </td>
                                     </tr>
