@@ -7,12 +7,25 @@ use App\Models\Enterprise;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Auth;
 
 class ProjectController extends Controller
 {
     public function index()
     {
-        $projects = Project::with('enterprise')->get();
+        $user = Auth::user();
+        $projects = [];
+
+        if ($user->role->name === 'admin') {
+            // Admins can see all projects
+            $projects = Project::with('enterprise')->get();
+        } elseif ($user->role->name === 'director') {
+            // Directors can only see projects from their enterprise
+            $projects = Project::with('enterprise')
+                ->where('enterprise_id', $user->enterprise_id)
+                ->get();
+        }
+
         return Inertia::render('Projects/Index', [
             'projects' => $projects,
         ]);
@@ -35,6 +48,7 @@ class ProjectController extends Controller
             'test_limit' => 'required|integer',
         ]);
 
+        // Store the project
         Project::create($request->all());
 
         return Redirect::route('projects.index')->with('success', 'Project created successfully.');

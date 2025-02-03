@@ -67,6 +67,14 @@ class TestController extends Controller
             'general_questions.*.options' => 'required|string',
         ]);
 
+        // Check if the project has reached its test limit
+        $project = Project::findOrFail($request->project_id);
+        $testCount = $project->tests()->count();
+
+        if ($testCount >= $project->test_limit) {
+            return redirect()->back()->withErrors(['project_id' => 'Este proyecto ha alcanzado su límite de pruebas.']);
+        }
+
         // Store the test
         $test = Test::create($request->all());
 

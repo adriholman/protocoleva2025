@@ -1,24 +1,11 @@
 import React from 'react';
-import { usePage, Link } from '@inertiajs/react';
+import { Link, usePage, Head } from '@inertiajs/react';
+import { FaPlus, FaEye, FaPlay, FaShareAlt, FaEdit, FaCheck } from 'react-icons/fa';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head } from '@inertiajs/react';
-import { FaEdit, FaPlus, FaPlay, FaShareAlt, FaTrash, FaCheck, FaEye } from 'react-icons/fa';
 
-export default function Index() {
-    const { tests, csrf_token, auth } = usePage().props;
+export default function Index({ tests, csrf_token }) {
+    const { auth } = usePage().props;
     const userRole = auth.user.role.name;
-
-    const markAsReady = (testId) => {
-        fetch(`/tests/${testId}/toggle-ready`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-Token': csrf_token,
-            },
-        }).then(() => {
-            window.location.reload();
-        });
-    };
 
     return (
         <AuthenticatedLayout

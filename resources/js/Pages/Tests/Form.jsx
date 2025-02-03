@@ -96,19 +96,19 @@ export default function Form({ data, setData, errors, projects, handleSubmit, bu
             <div className="mt-4">
                 <h4 className="text-lg font-semibold mb-2 text-center text-gray-800 dark:text-gray-200">Preguntas Generales</h4>
                 {questions.map((question, index) => (
-                    <div key={index} className="border p-4 rounded-md mb-4 relative">
+                    <div key={index} className="border p-4 rounded-md mb-4 relative dark:border-gray-700 dark:bg-gray-800">
                         <label className="block text-gray-700 dark:text-gray-300">Pregunta</label>
                         <input 
                             type="text" 
                             placeholder="Ejemplo: ¿Cuál es tu color favorito?" 
-                            className="border rounded-lg p-2 w-full focus:ring-2 focus:ring-blue-500"
+                            className="border rounded-lg p-2 w-full focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300"
                             value={question.name} 
                             onChange={(e) => handleQuestionChange(index, 'name', e.target.value)}
                         />
                         <label className="block text-gray-700 dark:text-gray-300 mt-2">Opciones (separadas por comas)</label>
                         <textarea 
                             placeholder="Ejemplo: Rojo, Azul, Verde..." 
-                            className="border rounded-lg p-2 w-full focus:ring-2 focus:ring-blue-500"
+                            className="border rounded-lg p-2 w-full focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300"
                             value={question.options} 
                             onChange={(e) => handleQuestionChange(index, 'options', e.target.value)}
                         ></textarea>
@@ -116,7 +116,7 @@ export default function Form({ data, setData, errors, projects, handleSubmit, bu
                         {/* Botón de Eliminar */}
                         <button 
                             type="button" 
-                            className="text-red-500 hover:text-red-700 transition mt-3 flex items-center gap-2"
+                            className="text-red-500 hover:text-red-700 transition mt-3 flex items-center gap-2 dark:text-red-400 dark:hover:text-red-600"
                             onClick={() => removeQuestion(index)}
                         >
                             <FaTrash size={16} /> Eliminar
