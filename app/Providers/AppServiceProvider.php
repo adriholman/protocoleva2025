@@ -24,9 +24,6 @@ class AppServiceProvider extends ServiceProvider
         Vite::prefetch(concurrency: 3);
         
         // Register middleware
-        //Route::aliasMiddleware('admin', \App\Http\Middleware\EnsureUserIsAdmin::class);
-        //Route::aliasMiddleware('director', \App\Http\Middleware\EnsureUserIsDirector::class);
-        //Route::aliasMiddleware('evaluator', \App\Http\Middleware\EnsureUserIsEvaluator::class);
         Route::aliasMiddleware('role', \App\Http\Middleware\EnsureUserHasRole::class);
     }
 }

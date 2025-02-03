@@ -33,12 +33,14 @@ export default function Index() {
                         {/* Contenedor para Título y Botón */}
                         <div className="flex justify-between items-center mb-4">
                             <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200">Lista de Tests</h3>
-                            <Link 
-                                href="/tests/create" 
-                                className="bg-green-500 text-white px-4 py-2 rounded-md inline-flex items-center"
-                            >
-                                <FaPlus className="mr-2" /> Crear
-                            </Link>
+                            {userRole === 'director' && (
+                                <Link 
+                                    href="/tests/create" 
+                                    className="bg-green-500 text-white px-4 py-2 rounded-md inline-flex items-center"
+                                >
+                                    <FaPlus className="mr-2" /> Crear
+                                </Link>
+                            )}
                         </div>
 
                         {/* Tabla de Tests */}
