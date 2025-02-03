@@ -18,6 +18,11 @@ class Test extends Model
         'is_ready',
     ];
 
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'user_test');
+    }
+
     public function project()
     {
         return $this->belongsTo(Project::class);

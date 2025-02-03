@@ -5,7 +5,8 @@ import { Head } from '@inertiajs/react';
 import { FaEdit, FaPlus, FaPlay, FaShareAlt, FaTrash, FaCheck, FaEye } from 'react-icons/fa';
 
 export default function Index() {
-    const { tests, csrf_token } = usePage().props;
+    const { tests, csrf_token, auth } = usePage().props;
+    const userRole = auth.user.role.name;
 
     const markAsReady = (testId) => {
         fetch(`/tests/${testId}/toggle-ready`, {
@@ -60,43 +61,35 @@ export default function Index() {
                                         <td className="border p-2 text-gray-800 dark:text-gray-200">{test.is_ready ? 'Sí' : 'No'}</td>
                                         <td className="border p-2 text-gray-800 dark:text-gray-200">
                                             <div className="flex justify-center space-x-2">
-                                                {test.is_ready ? (
+                                                {userRole === 'admin' && test.is_ready && (
+                                                    <Link href={`/tests/${test.id}`} className="text-blue-500 dark:text-blue-300 hover:scale-110 transition-transform">
+                                                        <FaEye size={20} />
+                                                    </Link>
+                                                )}
+                                                {userRole === 'director' && (
                                                     <>
-                                                        {/* Ver (Solo aparece cuando el test está listo) */}
-                                                        <Link href={`/tests/${test.id}`} className="text-blue-500 dark:text-blue-300 hover:scale-110 transition-transform">
-                                                            <FaEye size={20} />
-                                                        </Link>
-                                                        {/* Completar */}
-                                                        <Link href={`/tests/${test.id}/complete`} className="text-green-500 dark:text-green-300 hover:scale-110 transition-transform">
-                                                            <FaPlay size={20} />
-                                                        </Link>
-                                                        {/* Compartir */}
-                                                        <Link href={`/tests/${test.id}/invite`} className="text-yellow-500 dark:text-yellow-300 hover:scale-110 transition-transform">
-                                                            <FaShareAlt size={20} />
-                                                        </Link>
-                                                    </>
-                                                ) : (
-                                                    <>
-                                                        {/* Editar */}
                                                         <Link href={`/tests/${test.id}/edit`} className="text-blue-500 dark:text-blue-300 hover:scale-110 transition-transform">
                                                             <FaEdit size={20} />
                                                         </Link>
-                                                        {/* Marcar como Listo */}
-                                                        <form action={`/tests/${test.id}/toggle-ready`} method="POST" style={{ display: 'inline' }}>
-                                                            <input type="hidden" name="_token" value={csrf_token} />
-                                                            <button type="submit" className="text-green-500 dark:text-green-300 hover:scale-110 transition-transform">
-                                                                <FaCheck size={20} />
-                                                            </button>
-                                                        </form>
-                                                        {/* Eliminar */}
-                                                        <form action={`/tests/${test.id}`} method="POST" className="inline">
-                                                            <input type="hidden" name="_token" value={csrf_token} />
-                                                            <input type="hidden" name="_method" value="DELETE" />
-                                                            <button type="submit" className="text-red-500 dark:text-red-300 hover:scale-110 transition-transform">
-                                                                <FaTrash size={20} />
-                                                            </button>
-                                                        </form>
+                                                        {!test.is_ready && (
+                                                            <form action={`/tests/${test.id}/toggle-ready`} method="POST" style={{ display: 'inline' }}>
+                                                                <input type="hidden" name="_token" value={csrf_token} />
+                                                                <button type="submit" className="text-green-500 dark:text-green-300 hover:scale-110 transition-transform">
+                                                                    <FaCheck size={20} />
+                                                                </button>
+                                                            </form>
+                                                        )}
+                                                        {test.is_ready && (
+                                                            <Link href={`/tests/${test.id}/invite`} className="text-yellow-500 dark:text-yellow-300 hover:scale-110 transition-transform">
+                                                                <FaShareAlt size={20} />
+                                                            </Link>
+                                                        )}
                                                     </>
+                                                )}
+                                                {userRole === 'evaluator' && test.is_ready && (
+                                                    <Link href={`/tests/${test.id}/complete`} className="text-green-500 dark:text-green-300 hover:scale-110 transition-transform">
+                                                        <FaPlay size={20} />
+                                                    </Link>
                                                 )}
                                             </div>
                                         </td>

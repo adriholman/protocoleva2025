@@ -58,4 +58,9 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Enterprise::class);
     }
+
+    public function tests()
+    {
+        return $this->belongsToMany(Test::class, 'user_test');
+    }
 }

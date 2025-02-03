@@ -18,7 +18,28 @@ class TestController extends Controller
 {
     public function index()
     {
-        $tests = Test::with('project')->get();
+        $user = Auth::user();
+        $tests = [];
+
+        if ($user->role->name === 'admin') {
+            // Admins can see all tests
+            $tests = Test::with('project')->get();
+        } elseif ($user->role->name === 'director') {
+            // Directors can only see tests from their enterprise
+            $tests = Test::with('project')
+                ->whereHas('project', function ($query) use ($user) {
+                    $query->where('enterprise_id', $user->enterprise_id);
+                })
+                ->get();
+        } elseif ($user->role->name === 'evaluator') {
+            // Evaluators can only see tests they were invited to
+            $tests = Test::with('project')
+                ->whereHas('users', function ($query) use ($user) {
+                    $query->where('user_id', $user->id);
+                })
+                ->get();
+        }
+
         return Inertia::render('Tests/Index', [
             'tests' => $tests,
             'csrf_token' => csrf_token(),
@@ -46,7 +67,8 @@ class TestController extends Controller
             'general_questions.*.options' => 'required|string',
         ]);
 
-        $test = Test::create($request->only(['name', 'description', 'values', 'value_options', 'project_id']));
+        // Store the test
+        $test = Test::create($request->all());
 
         if ($request->has('general_questions')) {
             foreach ($request->general_questions as $question) {
