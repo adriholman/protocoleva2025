@@ -35,7 +35,7 @@ export default function Index() {
                                     <th className="border p-2 text-gray-800 dark:text-gray-200">Correo</th>
                                     <th className="border p-2 text-gray-800 dark:text-gray-200">Rol</th>
                                     <th className="border p-2 text-gray-800 dark:text-gray-200">Empresa</th>
-                                    <th className="border p-2 text-gray-800 dark:text-gray-200 text-center">Acciones</th>
+                                    <th className="border p-2 text-gray-800 dark:text-gray-200">Acciones</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -45,10 +45,12 @@ export default function Index() {
                                         <td className="border p-2 text-gray-800 dark:text-gray-200">{user.email}</td>
                                         <td className="border p-2 text-gray-800 dark:text-gray-200">{user.role ? user.role.name : 'Sin rol'}</td>
                                         <td className="border p-2 text-gray-800 dark:text-gray-200">{user.enterprise ? user.enterprise.name : 'Sin empresa'}</td>
-                                        <td className="border p-2 text-gray-800 dark:text-gray-200 text-center">
-                                            <Link href={`/users/${user.id}/edit`} className="inline-flex justify-center">
-                                                <FaEdit size={18} className="text-blue-500 dark:text-blue-300" />
-                                            </Link>
+                                        <td className="border p-2 text-gray-800 dark:text-gray-200">
+                                            <div className="flex justify-center space-x-2">
+                                                <Link href={`/users/${user.id}/edit`} className="inline-flex justify-center">
+                                                    <FaEdit size={20} className="text-blue-500 dark:text-blue-300" />
+                                                </Link>
+                                            </div>
                                         </td>
                                     </tr>
                                 )) : (
