@@ -26,18 +26,26 @@ export default function AuthenticatedLayout({ header, children }) {
                                 <NavLink href={route('dashboard')} active={route().current('dashboard')}>
                                     Dashboard
                                 </NavLink>
-                                <NavLink href={route('users.index')} active={route().current('users.index')}>
-                                    Users
-                                </NavLink>
-                                <NavLink href={route('enterprises.index')} active={route().current('enterprises.index')}>
-                                    Enterprises
-                                </NavLink>
-                                <NavLink href={route('projects.index')} active={route().current('projects.index')}>
-                                    Projects
-                                </NavLink>
-                                <NavLink href={route('tests.index')} active={route().current('tests.index')}>
-                                    Tests
-                                </NavLink>
+                                {user.role.name === 'admin' && (
+                                    <>
+                                        <NavLink href={route('users.index')} active={route().current('users.index')}>
+                                            Users
+                                        </NavLink>
+                                        <NavLink href={route('enterprises.index')} active={route().current('enterprises.index')}>
+                                            Enterprises
+                                        </NavLink>
+                                    </>
+                                )}
+                                {(user.role.name === 'admin' || user.role.name === 'director') && (
+                                    <NavLink href={route('projects.index')} active={route().current('projects.index')}>
+                                        Projects
+                                    </NavLink>
+                                )}
+                                {(user.role.name === 'admin' || user.role.name === 'director' || user.role.name === 'evaluator') && (
+                                    <NavLink href={route('tests.index')} active={route().current('tests.index')}>
+                                        Tests
+                                    </NavLink>
+                                )}
                             </div>
                         </div>
 
@@ -69,11 +77,7 @@ export default function AuthenticatedLayout({ header, children }) {
 
                                     <Dropdown.Content>
                                         <Dropdown.Link href={route('profile.edit')}>Profile</Dropdown.Link>
-                                        <Dropdown.Link
-                                            href={route('logout')}
-                                            method="post"
-                                            as="button"
-                                        >
+                                        <Dropdown.Link href={route('logout')} method="post" as="button">
                                             Log Out
                                         </Dropdown.Link>
                                     </Dropdown.Content>
@@ -115,31 +119,26 @@ export default function AuthenticatedLayout({ header, children }) {
                         >
                             Dashboard
                         </ResponsiveNavLink>
-                        <ResponsiveNavLink
-                            href={route('users.index')}
-                            active={route().current('users.index')}
-                        >
-                            Users
-                        </ResponsiveNavLink>
-                        <ResponsiveNavLink
-                            href={route('enterprises.index')}
-                            active={route().current('enterprises.index')}
-                        >
-                            Enterprises
-                        </ResponsiveNavLink>
-                        <ResponsiveNavLink
-                            href={route('projects.index')}
-                            active={route().current('projects.index')}
-                        >
-                            Projects
-                        </ResponsiveNavLink>
-                        <ResponsiveNavLink
-                            href={route('tests.index')}
-                            active={route().current('tests.index')}
-                        >
-                            Tests
-                        </ResponsiveNavLink>
-
+                        {user.role.name === 'admin' && (
+                            <>
+                                <ResponsiveNavLink href={route('users.index')} active={route().current('users.index')}>
+                                    Users
+                                </ResponsiveNavLink>
+                                <ResponsiveNavLink href={route('enterprises.index')} active={route().current('enterprises.index')}>
+                                    Enterprises
+                                </ResponsiveNavLink>
+                            </>
+                        )}
+                        {(user.role.name === 'admin' || user.role.name === 'director') && (
+                            <ResponsiveNavLink href={route('projects.index')} active={route().current('projects.index')}>
+                                Projects
+                            </ResponsiveNavLink>
+                        )}
+                        {(user.role.name === 'admin' || user.role.name === 'director' || user.role.name === 'evaluator') && (
+                            <ResponsiveNavLink href={route('tests.index')} active={route().current('tests.index')}>
+                                Tests
+                            </ResponsiveNavLink>
+                        )}
                     </div>
 
                     <div className="border-t border-gray-200 pb-1 pt-4 dark:border-gray-600">
