@@ -7,6 +7,21 @@ export default function Index({ tests, csrf_token }) {
     const { auth } = usePage().props;
     const userRole = auth.user.role.name;
 
+    const handleToggleReady = (testId) => {
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = `/tests/${testId}/toggle-ready`;
+
+        const csrfInput = document.createElement('input');
+        csrfInput.type = 'hidden';
+        csrfInput.name = '_token';
+        csrfInput.value = csrf_token;
+        form.appendChild(csrfInput);
+
+        document.body.appendChild(form);
+        form.submit();
+    };
+
     return (
         <AuthenticatedLayout
             header={<h2 className="text-xl font-semibold leading-tight text-gray-800 dark:text-gray-200">Tests</h2>}
@@ -61,18 +76,19 @@ export default function Index({ tests, csrf_token }) {
                                                             <FaEdit size={20} />
                                                         </Link>
                                                         {!test.is_ready && (
-                                                            <form action={`/tests/${test.id}/toggle-ready`} method="POST" style={{ display: 'inline' }}>
-                                                                <input type="hidden" name="_token" value={csrf_token} />
-                                                                <button type="submit" className="text-green-500 dark:text-green-300 hover:scale-110 transition-transform">
-                                                                    <FaCheck size={20} />
-                                                                </button>
-                                                            </form>
+                                                            <button
+                                                                type="button"
+                                                                onClick={() => handleToggleReady(test.id)}
+                                                                className="text-green-500 dark:text-green-300 hover:scale-110 transition-transform"
+                                                            >
+                                                                <FaCheck size={20} />
+                                                            </button>
                                                         )}
-                                                        {test.is_ready && (
+                                                        {test.is_ready ? (
                                                             <Link href={`/tests/${test.id}/invite`} className="text-yellow-500 dark:text-yellow-300 hover:scale-110 transition-transform">
                                                                 <FaShareAlt size={20} />
                                                             </Link>
-                                                        )}
+                                                        ) : null}
                                                     </>
                                                 )}
                                                 {userRole === 'evaluator' && test.is_ready && (
