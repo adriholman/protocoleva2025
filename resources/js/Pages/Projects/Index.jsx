@@ -34,7 +34,7 @@ export default function ProjectsIndex({ projects }) {
                                     <th className="border p-2 text-gray-800 dark:text-gray-200">Descripción</th>
                                     <th className="border p-2 text-gray-800 dark:text-gray-200">Empresa</th>
                                     <th className="border p-2 text-gray-800 dark:text-gray-200">Límite de Tests</th>
-                                    <th className="border p-2 text-gray-800 dark:text-gray-200 text-center">Acciones</th>
+                                    <th className="border p-2 text-gray-800 dark:text-gray-200">Acciones</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -44,10 +44,12 @@ export default function ProjectsIndex({ projects }) {
                                         <td className="border p-2 text-gray-800 dark:text-gray-200">{project.description}</td>
                                         <td className="border p-2 text-gray-800 dark:text-gray-200">{project.enterprise?.name || 'Sin empresa'}</td>
                                         <td className="border p-2 text-gray-800 dark:text-gray-200">{project.test_limit}</td>
-                                        <td className="border-0 p-2 text-gray-800 dark:text-gray-200 flex justify-center">
-                                            <Link href={`/projects/${project.id}/edit`} className="text-blue-500 dark:text-blue-300 hover:scale-110 transition-transform">
-                                                <FaEdit size={20} />
-                                            </Link>
+                                        <td className="border p-2 text-gray-800 dark:text-gray-200r">
+                                            <div className="flex justify-center space-x-2">
+                                                <Link href={`/projects/${project.id}/edit`} className="text-blue-500 dark:text-blue-300 hover:scale-110 transition-transform">
+                                                    <FaEdit size={20} />
+                                                </Link>
+                                            </div>
                                         </td>
                                     </tr>
                                 )) : (

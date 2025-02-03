@@ -25,58 +25,62 @@ export default function Form({ data, setData, errors, projects, handleSubmit, bu
     return (
         <form onSubmit={handleSubmit} className="space-y-4 w-full max-w-2xl mx-auto">
             {/* Nombre */}
-            <div>
-                <label className="block text-gray-700 dark:text-gray-300">Nombre</label>
+            <div className="mb-4">
+                <label htmlFor="name" className="block text-gray-700 dark:text-gray-300">Nombre</label>
                 <input 
                     type="text" 
-                    className="border rounded-lg p-2 w-full focus:ring-2 focus:ring-blue-500"
+                    id="name"
+                    className="border p-2 w-full dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200"
                     value={data.name} 
                     onChange={(e) => setData('name', e.target.value)} 
                 />
-                {errors.name && <div className="text-red-500 mt-1">{errors.name}</div>}
+                {errors.name && <div className="text-red-500 dark:text-red-300">{errors.name}</div>}
             </div>
 
             {/* Descripción */}
-            <div>
-                <label className="block text-gray-700 dark:text-gray-300">Descripción</label>
+            <div className="mb-4">
+                <label htmlFor="description" className="block text-gray-700 dark:text-gray-300">Descripción</label>
                 <textarea 
-                    placeholder="Ejemplo: Este test mide habilidades cognitivas..." 
-                    className="border rounded-lg p-2 w-full focus:ring-2 focus:ring-blue-500"
+                    id="description"
+                    className="border p-2 w-full dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200"
                     value={data.description} 
                     onChange={(e) => setData('description', e.target.value)} 
                 ></textarea>
-                {errors.description && <div className="text-red-500 mt-1">{errors.description}</div>}
+                {errors.description && <div className="text-red-500 dark:text-red-300">{errors.description}</div>}
             </div>
 
             {/* Valores */}
-            <div>
-                <label className="block text-gray-700 dark:text-gray-300">Valores</label>
-                <textarea 
-                    placeholder="Ejemplo: Razonamiento, Memoria, Atención..." 
-                    className="border rounded-lg p-2 w-full focus:ring-2 focus:ring-blue-500"
+            <div className="mb-4">
+                <label htmlFor="values" className="block text-gray-700 dark:text-gray-300">Valores</label>
+                <input 
+                    type="text" 
+                    id="values"
+                    className="border p-2 w-full dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200"
                     value={data.values} 
                     onChange={(e) => setData('values', e.target.value)} 
-                ></textarea>
-                {errors.values && <div className="text-red-500 mt-1">{errors.values}</div>}
+                />
+                {errors.values && <div className="text-red-500 dark:text-red-300">{errors.values}</div>}
             </div>
 
             {/* Opciones de Valores */}
-            <div>
-                <label className="block text-gray-700 dark:text-gray-300">Opciones de Valores (separadas por comas)</label>
-                <textarea 
-                    placeholder="Ejemplo: Alto, Medio, Bajo..." 
-                    className="border rounded-lg p-2 w-full focus:ring-2 focus:ring-blue-500"
+            <div className="mb-4">
+                <label htmlFor="value_options" className="block text-gray-700 dark:text-gray-300">Opciones de Valores (separadas por comas)</label>
+                <input 
+                    type="text" 
+                    id="value_options"
+                    className="border p-2 w-full dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200"
                     value={data.value_options} 
                     onChange={(e) => setData('value_options', e.target.value)} 
-                ></textarea>
-                {errors.value_options && <div className="text-red-500 mt-1">{errors.value_options}</div>}
+                />
+                {errors.value_options && <div className="text-red-500 dark:text-red-300">{errors.value_options}</div>}
             </div>
 
             {/* Proyecto */}
-            <div>
-                <label className="block text-gray-700 dark:text-gray-300">Proyecto</label>
+            <div className="mb-4">
+                <label htmlFor="project_id" className="block text-gray-700 dark:text-gray-300">Proyecto</label>
                 <select 
-                    className="border rounded-lg p-2 w-full focus:ring-2 focus:ring-blue-500"
+                    id="project_id"
+                    className="border p-2 w-full dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200"
                     value={data.project_id} 
                     onChange={(e) => setData('project_id', e.target.value)}
                 >
@@ -85,12 +89,12 @@ export default function Form({ data, setData, errors, projects, handleSubmit, bu
                         <option key={project.id} value={project.id}>{project.name}</option>
                     ))}
                 </select>
-                {errors.project_id && <div className="text-red-500 mt-1">{errors.project_id}</div>}
+                {errors.project_id && <div className="text-red-500 dark:text-red-300">{errors.project_id}</div>}
             </div>
             <hr className="border-gray-300 dark:border-gray-700" />    
             {/* Preguntas Generales */}
             <div className="mt-4">
-                <h4 className="text-lg font-semibold mb-2 text-center">Preguntas Generales</h4>
+                <h4 className="text-lg font-semibold mb-2 text-center text-gray-800 dark:text-gray-200">Preguntas Generales</h4>
                 {questions.map((question, index) => (
                     <div key={index} className="border p-4 rounded-md mb-4 relative">
                         <label className="block text-gray-700 dark:text-gray-300">Pregunta</label>

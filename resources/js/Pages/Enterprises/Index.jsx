@@ -37,7 +37,7 @@ export default function EnterprisesIndex({ enterprises }) {
                                     <th className="border p-2 text-gray-800 dark:text-gray-200">Dirección</th>
                                     <th className="border p-2 text-gray-800 dark:text-gray-200">Teléfono</th>
                                     <th className="border p-2 text-gray-800 dark:text-gray-200">Sitio Web</th>
-                                    <th className="border p-2 text-gray-800 dark:text-gray-200 text-center">Acciones</th>
+                                    <th className="border p-2 text-gray-800 dark:text-gray-200">Acciones</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -54,10 +54,12 @@ export default function EnterprisesIndex({ enterprises }) {
                                                 {enterprise.website}
                                             </Link>
                                         </td>
-                                        <td className="border-0 p-2 text-gray-800 dark:text-gray-200 flex justify-center">
-                                            <Link href={`/enterprises/${enterprise.id}/edit`} className="text-blue-500 dark:text-blue-300 hover:scale-110 transition-transform">
-                                                <FaEdit size={20} />
-                                            </Link>
+                                        <td className="border p-2 text-gray-800 dark:text-gray-200">
+                                            <div className="flex justify-center space-x-2">
+                                                <Link href={`/enterprises/${enterprise.id}/edit`} className="text-blue-500 dark:text-blue-300 hover:scale-110 transition-transform">
+                                                    <FaEdit size={20} />
+                                                </Link>
+                                            </div>
                                         </td>
                                     </tr>
                                 )) : (

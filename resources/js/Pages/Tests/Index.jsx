@@ -48,7 +48,7 @@ export default function Index() {
                                     <th className="border p-2 text-gray-800 dark:text-gray-200">Descripción</th>
                                     <th className="border p-2 text-gray-800 dark:text-gray-200">Proyecto</th>
                                     <th className="border p-2 text-gray-800 dark:text-gray-200">Está Listo</th>
-                                    <th className="border p-2 text-gray-800 dark:text-gray-200 text-center">Acciones</th>
+                                    <th className="border p-2 text-gray-800 dark:text-gray-200">Acciones</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -58,45 +58,47 @@ export default function Index() {
                                         <td className="border p-2 text-gray-800 dark:text-gray-200">{test.description}</td>
                                         <td className="border p-2 text-gray-800 dark:text-gray-200">{test.project?.name || 'Sin proyecto'}</td>
                                         <td className="border p-2 text-gray-800 dark:text-gray-200">{test.is_ready ? 'Sí' : 'No'}</td>
-                                        <td className="border-0 p-2 text-gray-800 dark:text-gray-200 flex justify-center space-x-4">
-                                            {test.is_ready ? (
-                                                <>
-                                                    {/* Ver (Solo aparece cuando el test está listo) */}
-                                                    <Link href={`/tests/${test.id}`} className="text-blue-500 dark:text-blue-300 hover:scale-110 transition-transform">
-                                                        <FaEye size={20} />
-                                                    </Link>
-                                                    {/* Completar */}
-                                                    <Link href={`/tests/${test.id}/complete`} className="text-green-500 dark:text-green-300 hover:scale-110 transition-transform">
-                                                        <FaPlay size={20} />
-                                                    </Link>
-                                                    {/* Compartir */}
-                                                    <Link href={`/tests/${test.id}/invite`} className="text-yellow-500 dark:text-yellow-300 hover:scale-110 transition-transform">
-                                                        <FaShareAlt size={20} />
-                                                    </Link>
-                                                </>
-                                            ) : (
-                                                <>
-                                                    {/* Editar */}
-                                                    <Link href={`/tests/${test.id}/edit`} className="text-blue-500 dark:text-blue-300 hover:scale-110 transition-transform">
-                                                        <FaEdit size={20} />
-                                                    </Link>
-                                                    {/* Marcar como Listo */}
-                                                    <button 
-                                                        onClick={() => markAsReady(test.id)} 
-                                                        className="text-green-500 dark:text-green-300 hover:scale-110 transition-transform"
-                                                    >
-                                                        <FaCheck size={20} />
-                                                    </button>
-                                                    {/* Eliminar */}
-                                                    <form action={`/tests/${test.id}`} method="POST" className="inline">
-                                                        <input type="hidden" name="_token" value={csrf_token} />
-                                                        <input type="hidden" name="_method" value="DELETE" />
-                                                        <button type="submit" className="text-red-500 dark:text-red-300 hover:scale-110 transition-transform">
-                                                            <FaTrash size={20} />
-                                                        </button>
-                                                    </form>
-                                                </>
-                                            )}
+                                        <td className="border p-2 text-gray-800 dark:text-gray-200">
+                                            <div className="flex justify-center space-x-2">
+                                                {test.is_ready ? (
+                                                    <>
+                                                        {/* Ver (Solo aparece cuando el test está listo) */}
+                                                        <Link href={`/tests/${test.id}`} className="text-blue-500 dark:text-blue-300 hover:scale-110 transition-transform">
+                                                            <FaEye size={20} />
+                                                        </Link>
+                                                        {/* Completar */}
+                                                        <Link href={`/tests/${test.id}/complete`} className="text-green-500 dark:text-green-300 hover:scale-110 transition-transform">
+                                                            <FaPlay size={20} />
+                                                        </Link>
+                                                        {/* Compartir */}
+                                                        <Link href={`/tests/${test.id}/invite`} className="text-yellow-500 dark:text-yellow-300 hover:scale-110 transition-transform">
+                                                            <FaShareAlt size={20} />
+                                                        </Link>
+                                                    </>
+                                                ) : (
+                                                    <>
+                                                        {/* Editar */}
+                                                        <Link href={`/tests/${test.id}/edit`} className="text-blue-500 dark:text-blue-300 hover:scale-110 transition-transform">
+                                                            <FaEdit size={20} />
+                                                        </Link>
+                                                        {/* Marcar como Listo */}
+                                                        <form action={`/tests/${test.id}/toggle-ready`} method="POST" style={{ display: 'inline' }}>
+                                                            <input type="hidden" name="_token" value={csrf_token} />
+                                                            <button type="submit" className="text-green-500 dark:text-green-300 hover:scale-110 transition-transform">
+                                                                <FaCheck size={20} />
+                                                            </button>
+                                                        </form>
+                                                        {/* Eliminar */}
+                                                        <form action={`/tests/${test.id}`} method="POST" className="inline">
+                                                            <input type="hidden" name="_token" value={csrf_token} />
+                                                            <input type="hidden" name="_method" value="DELETE" />
+                                                            <button type="submit" className="text-red-500 dark:text-red-300 hover:scale-110 transition-transform">
+                                                                <FaTrash size={20} />
+                                                            </button>
+                                                        </form>
+                                                    </>
+                                                )}
+                                            </div>
                                         </td>
                                     </tr>
                                 )) : (
