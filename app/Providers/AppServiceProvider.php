@@ -5,6 +5,7 @@ namespace App\Providers;
 use Illuminate\Support\Facades\Vite;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
+use App\Http\Middleware\CheckTestCompletion;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -25,5 +26,6 @@ class AppServiceProvider extends ServiceProvider
         
         // Register middleware
         Route::aliasMiddleware('role', \App\Http\Middleware\EnsureUserHasRole::class);
+        Route::aliasMiddleware('checkTestCompletion', CheckTestCompletion::class);
     }
 }

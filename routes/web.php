@@ -76,4 +76,10 @@ Route::middleware(['auth', 'role:evaluator'])->group(function () {
     Route::post('tests/{id}/submit', [TestController::class, 'submit'])->name('tests.submit');
 });
 
+// Test completion middleware
+Route::middleware(['auth', 'role:evaluator', 'checkTestCompletion'])->group(function () {
+    Route::get('tests/{id}/complete', [TestController::class, 'complete'])->name('tests.complete');
+    Route::post('tests/{id}/submit', [TestController::class, 'submit'])->name('tests.submit');
+});
+
 require __DIR__.'/auth.php';
