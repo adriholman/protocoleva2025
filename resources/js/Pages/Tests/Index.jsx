@@ -65,7 +65,7 @@ export default function Index({ tests, csrf_token }) {
                                         <td className="border p-2 text-gray-800 dark:text-gray-200">{test.is_ready ? 'Sí' : 'No'}</td>
                                         <td className="border p-2 text-gray-800 dark:text-gray-200">
                                             <div className="flex justify-center space-x-2">
-                                                {userRole === 'admin' && test.is_ready && (
+                                                {userRole === 'admin' && (
                                                     <Link href={`/tests/${test.id}`} className="text-blue-500 dark:text-blue-300 hover:scale-110 transition-transform">
                                                         <FaEye size={20} />
                                                     </Link>
@@ -91,7 +91,7 @@ export default function Index({ tests, csrf_token }) {
                                                         ) : null}
                                                     </>
                                                 )}
-                                                {userRole === 'evaluator' && test.is_ready && (
+                                                {userRole === 'evaluator' && test.is_ready && test.users[0]?.pivot?.completed === 0 && (
                                                     <Link href={`/tests/${test.id}/complete`} className="text-green-500 dark:text-green-300 hover:scale-110 transition-transform">
                                                         <FaPlay size={20} />
                                                     </Link>

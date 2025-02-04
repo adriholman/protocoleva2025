@@ -33,11 +33,13 @@ class TestController extends Controller
                 ->get();
         } elseif ($user->role->name === 'evaluator') {
             // Evaluators can only see tests they were invited to
-            $tests = Test::with('project')
-                ->whereHas('users', function ($query) use ($user) {
-                    $query->where('user_id', $user->id);
-                })
-                ->get();
+            $tests = Test::with(['project', 'users' => function ($query) use ($user) {
+                $query->where('user_id', $user->id);
+            }])
+            ->whereHas('users', function ($query) use ($user) {
+                $query->where('user_id', $user->id);
+            })
+            ->get();
         }
 
         return Inertia::render('Tests/Index', [

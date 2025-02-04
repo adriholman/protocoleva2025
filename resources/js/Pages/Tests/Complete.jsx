@@ -95,7 +95,7 @@ export default function Complete() {
                             className="bg-blue-500 text-white px-4 py-2 rounded-lg w-full hover:bg-blue-600 transition"
                             disabled={processing}
                         >
-                            Enviar Respuestas
+                            Completar
                         </button>
                     </form>
                 </div>
