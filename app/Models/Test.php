@@ -38,4 +38,16 @@ class Test extends Model
     {
         return $this->hasMany(ValueQuestion::class);
     }
+
+    // Add this method to get the status display name
+    public function getStatusDisplayNameAttribute()
+    {
+        $statusDisplayNames = [
+            'draft' => 'Borrador',
+            'available' => 'Disponible',
+            'finished' => 'Terminado',
+        ];
+
+        return $statusDisplayNames[$this->status] ?? 'Estado Desconocido';
+    }
 }

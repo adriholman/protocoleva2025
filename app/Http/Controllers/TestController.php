@@ -16,6 +16,41 @@ use Illuminate\Support\Facades\DB;
 
 class TestController extends Controller
 {
+/*     public function index()
+    {
+        $user = Auth::user();
+        $tests = [];
+
+        if ($user->role->name === 'admin') {
+            // Admins can see all tests
+            $tests = Test::with('project')->get();
+        } elseif ($user->role->name === 'director') {
+            // Directors can only see tests from their enterprise
+            $tests = Test::with('project')
+                ->whereHas('project', function ($query) use ($user) {
+                    $query->where('enterprise_id', $user->enterprise_id);
+                })
+                ->get();
+        } elseif ($user->role->name === 'evaluator') {
+            // Evaluators can only see tests they were invited to
+            $tests = Test::with([
+                'project',
+                'users' => function ($query) use ($user) {
+                    $query->where('user_id', $user->id);
+                }
+            ])
+                ->whereHas('users', function ($query) use ($user) {
+                    $query->where('user_id', $user->id);
+                })
+                ->get();
+        }
+
+        return Inertia::render('Tests/Index', [
+            'tests' => $tests,
+            'csrf_token' => csrf_token(),
+        ]);
+    } */
+
     public function index()
     {
         $user = Auth::user();
@@ -33,17 +68,26 @@ class TestController extends Controller
                 ->get();
         } elseif ($user->role->name === 'evaluator') {
             // Evaluators can only see tests they were invited to
-            $tests = Test::with(['project', 'users' => function ($query) use ($user) {
-                $query->where('user_id', $user->id);
-            }])
-            ->whereHas('users', function ($query) use ($user) {
-                $query->where('user_id', $user->id);
-            })
-            ->get();
+            $tests = Test::with([
+                'project',
+                'users' => function ($query) use ($user) {
+                    $query->where('user_id', $user->id);
+                }
+            ])
+                ->whereHas('users', function ($query) use ($user) {
+                    $query->where('user_id', $user->id);
+                })
+                ->get();
         }
 
         return Inertia::render('Tests/Index', [
-            'tests' => $tests,
+            'tests' => $tests->map(function ($test) {
+                return [
+                    'id' => $test->id,
+                    'status' => $test->status,
+                    'status_display_name' => $test->status_display_name,
+                ];
+            }),
             'csrf_token' => csrf_token(),
         ]);
     }
@@ -100,7 +144,7 @@ class TestController extends Controller
 
     public function show(Test $test)
     {
-        $test->load(['project','generalQuestions', 'valueQuestions']);
+        $test->load(['project', 'generalQuestions', 'valueQuestions']);
         return Inertia::render('Tests/Show', [
             'test' => $test,
         ]);

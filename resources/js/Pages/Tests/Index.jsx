@@ -62,7 +62,7 @@ export default function Index({ tests, csrf_token }) {
                                         <td className="border p-2 text-gray-800 dark:text-gray-200">{test.name}</td>
                                         <td className="border p-2 text-gray-800 dark:text-gray-200">{test.description}</td>
                                         <td className="border p-2 text-gray-800 dark:text-gray-200">{test.project?.name || 'Sin proyecto'}</td>
-                                        <td className="border p-2 text-gray-800 dark:text-gray-200">{test.status}</td>
+                                        <td className="border p-2 text-gray-800 dark:text-gray-200">{test.status_display_name}</td>
                                         <td className="border p-2 text-gray-800 dark:text-gray-200">
                                             <div className="flex justify-center space-x-2">
                                                 {userRole === 'admin' && test.status === 'available' && (
