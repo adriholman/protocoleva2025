@@ -41,15 +41,21 @@ class ProjectController extends Controller
 
     public function store(Request $request)
     {
+        $user = Auth::user();
+
         $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
-            'enterprise_id' => 'required|exists:enterprises,id',
             'test_limit' => 'required|integer',
         ]);
 
-        // Store the project
-        Project::create($request->all());
+        // Automatically set the enterprise_id based on the authenticated user's enterprise
+        $project = Project::create([
+            'name' => $request->name,
+            'description' => $request->description,
+            'enterprise_id' => $user->enterprise_id,
+            'test_limit' => $request->test_limit,
+        ]);
 
         return Redirect::route('projects.index')->with('success', 'Project created successfully.');
     }
