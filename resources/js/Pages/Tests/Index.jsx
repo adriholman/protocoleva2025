@@ -7,10 +7,10 @@ export default function Index({ tests, csrf_token }) {
     const { auth } = usePage().props;
     const userRole = auth.user.role.name;
 
-    const handleToggleReady = (testId) => {
+    const handleToggleStatus = (testId) => {
         const form = document.createElement('form');
         form.method = 'POST';
-        form.action = `/tests/${testId}/toggle-ready`;
+        form.action = `/tests/${testId}/toggle-status`;
 
         const csrfInput = document.createElement('input');
         csrfInput.type = 'hidden';
@@ -52,7 +52,7 @@ export default function Index({ tests, csrf_token }) {
                                     <th className="border p-2 text-gray-800 dark:text-gray-200">Nombre</th>
                                     <th className="border p-2 text-gray-800 dark:text-gray-200">Descripción</th>
                                     <th className="border p-2 text-gray-800 dark:text-gray-200">Proyecto</th>
-                                    <th className="border p-2 text-gray-800 dark:text-gray-200">Está Listo</th>
+                                    <th className="border p-2 text-gray-800 dark:text-gray-200">Estado</th>
                                     <th className="border p-2 text-gray-800 dark:text-gray-200">Acciones</th>
                                 </tr>
                             </thead>
@@ -62,10 +62,10 @@ export default function Index({ tests, csrf_token }) {
                                         <td className="border p-2 text-gray-800 dark:text-gray-200">{test.name}</td>
                                         <td className="border p-2 text-gray-800 dark:text-gray-200">{test.description}</td>
                                         <td className="border p-2 text-gray-800 dark:text-gray-200">{test.project?.name || 'Sin proyecto'}</td>
-                                        <td className="border p-2 text-gray-800 dark:text-gray-200">{test.is_ready ? 'Sí' : 'No'}</td>
+                                        <td className="border p-2 text-gray-800 dark:text-gray-200">{test.status}</td>
                                         <td className="border p-2 text-gray-800 dark:text-gray-200">
                                             <div className="flex justify-center space-x-2">
-                                                {userRole === 'admin' && (
+                                                {userRole === 'admin' && test.status === 'available' && (
                                                     <Link href={`/tests/${test.id}`} className="text-blue-500 dark:text-blue-300 hover:scale-110 transition-transform">
                                                         <FaEye size={20} />
                                                     </Link>
@@ -75,23 +75,23 @@ export default function Index({ tests, csrf_token }) {
                                                         <Link href={`/tests/${test.id}/edit`} className="text-blue-500 dark:text-blue-300 hover:scale-110 transition-transform">
                                                             <FaEdit size={20} />
                                                         </Link>
-                                                        {!test.is_ready && (
+                                                        {test.status === 'draft' && (
                                                             <button
                                                                 type="button"
-                                                                onClick={() => handleToggleReady(test.id)}
+                                                                onClick={() => handleToggleStatus(test.id)}
                                                                 className="text-green-500 dark:text-green-300 hover:scale-110 transition-transform"
                                                             >
                                                                 <FaCheck size={20} />
                                                             </button>
                                                         )}
-                                                        {test.is_ready ? (
+                                                        {test.status === 'available' && (
                                                             <Link href={`/tests/${test.id}/invite`} className="text-yellow-500 dark:text-yellow-300 hover:scale-110 transition-transform">
                                                                 <FaShareAlt size={20} />
                                                             </Link>
-                                                        ) : null}
+                                                        )}
                                                     </>
                                                 )}
-                                                {userRole === 'evaluator' && test.is_ready && test.users[0]?.pivot?.completed === 0 && (
+                                                {userRole === 'evaluator' && test.status === 'available' && test.users[0]?.pivot?.completed === 0 && (
                                                     <Link href={`/tests/${test.id}/complete`} className="text-green-500 dark:text-green-300 hover:scale-110 transition-transform">
                                                         <FaPlay size={20} />
                                                     </Link>

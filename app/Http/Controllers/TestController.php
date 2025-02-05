@@ -64,6 +64,7 @@ class TestController extends Controller
             'values' => 'required|string',
             'value_options' => 'required|string',
             'project_id' => 'required|exists:projects,id',
+            'status' => 'required|in:draft,available,finished',
             'general_questions' => 'array',
             'general_questions.*.name' => 'required|string|max:255',
             'general_questions.*.options' => 'required|string',
@@ -225,5 +226,18 @@ class TestController extends Controller
         }
 
         return redirect()->route('tests.index')->with('success', 'Users invited successfully.');
+    }
+
+    public function toggleStatus($id)
+    {
+        $test = Test::findOrFail($id);
+        if ($test->status === 'draft') {
+            $test->status = 'available';
+        } elseif ($test->status === 'available') {
+            $test->status = 'finished';
+        }
+        $test->save();
+
+        return redirect()->route('tests.index')->with('success', 'Test status updated successfully.');
     }
 }

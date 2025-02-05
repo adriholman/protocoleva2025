@@ -6,7 +6,7 @@ import Form from './Form';
 
 export default function Edit() {
     const { project, enterprises } = usePage().props;
-    const { data, setData, put, errors } = useForm({
+    const { data, setData, patch, errors } = useForm({
         name: project.name,
         description: project.description,
         enterprise_id: project.enterprise_id,
@@ -15,7 +15,7 @@ export default function Edit() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        put(route('projects.update', project.id));
+        patch(route('projects.update', project));
     };
 
     return (

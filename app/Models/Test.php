@@ -15,7 +15,7 @@ class Test extends Model
         'values',
         'value_options',
         'project_id',
-        'is_ready',
+        'status',
     ];
 
     public function users()

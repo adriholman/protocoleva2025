@@ -57,7 +57,7 @@ Route::middleware(['auth', 'role:admin,director'])->group(function () {
     Route::get('tests/{test}/edit', [TestController::class, 'edit'])->name('tests.edit');
     Route::patch('tests/{test}', [TestController::class, 'update'])->name('tests.update');
     Route::delete('tests/{test}', [TestController::class, 'destroy'])->name('tests.destroy');
-    Route::post('tests/{test}/toggle-ready', [TestController::class, 'toggleReady'])->name('tests.toggleReady');
+    Route::post('tests/{test}/toggle-status', [TestController::class, 'toggleStatus'])->name('tests.toggleStatus');
     Route::get('tests/{id}/invite', [TestController::class, 'invite'])->name('tests.invite');
     Route::post('tests/{id}/send-invites', [TestController::class, 'sendInvites'])->name('tests.sendInvites');
 
@@ -79,7 +79,6 @@ Route::middleware(['auth', 'role:evaluator'])->group(function () {
 // Test completion middleware
 Route::middleware(['auth', 'role:evaluator', 'checkTestCompletion'])->group(function () {
     Route::get('tests/{id}/complete', [TestController::class, 'complete'])->name('tests.complete');
-    Route::post('tests/{id}/submit', [TestController::class, 'submit'])->name('tests.submit');
 });
 
 require __DIR__.'/auth.php';

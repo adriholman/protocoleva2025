@@ -5,7 +5,7 @@ import { Head } from '@inertiajs/react';
 import Form from './Form';
 
 export default function Edit({ user, roles, enterprises }) {
-    const { data, setData, put, processing, errors } = useForm({
+    const { data, setData, patch, processing, errors } = useForm({
         name: user.name,
         email: user.email,
         password: '',
@@ -16,7 +16,7 @@ export default function Edit({ user, roles, enterprises }) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        put(route('users.update', user.id));
+        patch(route('users.update', user.id));
     };
 
     return (
