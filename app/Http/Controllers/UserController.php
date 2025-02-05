@@ -14,7 +14,16 @@ class UserController extends Controller
 {
     public function index()
     {
-        $users = User::with(['role', 'enterprise'])->get();
+        $users = User::with(['role', 'enterprise'])->get()->map(function ($user) {
+            return [
+                'id' => $user->id,
+                'name' => $user->name,
+                'email' => $user->email,
+                'roleDisplayName' => $user->role->displayName,
+                'enterprise' => $user->enterprise ? $user->enterprise->name : 'Sin empresa',
+            ];
+        });
+
         return Inertia::render('Users/Index', [
             'users' => $users,
         ]);
@@ -22,7 +31,12 @@ class UserController extends Controller
 
     public function create()
     {
-        $roles = Role::all();
+        $roles = Role::all()->map(function ($role) {
+            return [
+                'id' => $role->id,
+                'roleDisplayName' => $role->displayName,
+            ];
+        });
         $enterprises = Enterprise::all();
         return Inertia::render('Users/Create', [
             'roles' => $roles,
@@ -53,7 +67,12 @@ class UserController extends Controller
 
     public function edit(User $user)
     {
-        $roles = Role::all();
+        $roles = Role::all()->map(function ($role) {
+            return [
+                'id' => $role->id,
+                'roleDisplayName' => $role->displayName,
+            ];
+        });
         $enterprises = Enterprise::all();
         return Inertia::render('Users/Edit', [
             'user' => $user,

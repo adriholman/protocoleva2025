@@ -16,4 +16,16 @@ class Role extends Model
     {
         return $this->hasMany(User::class);
     }
+
+    // Add this method to get the role display name
+    public function getDisplayNameAttribute()
+    {
+        $roleDisplayNames = [
+            'admin' => 'Administrador',
+            'director' => 'Director',
+            'evaluator' => 'Evaluador',
+        ];
+
+        return $roleDisplayNames[$this->name] ?? 'Sin Rol';
+    }
 }

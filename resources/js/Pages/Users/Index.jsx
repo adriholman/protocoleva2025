@@ -43,8 +43,8 @@ export default function Index() {
                                     <tr key={user.id} className="text-center bg-white dark:bg-gray-800">
                                         <td className="border p-2 text-gray-800 dark:text-gray-200">{user.name}</td>
                                         <td className="border p-2 text-gray-800 dark:text-gray-200">{user.email}</td>
-                                        <td className="border p-2 text-gray-800 dark:text-gray-200">{user.role ? user.role.name : 'Sin rol'}</td>
-                                        <td className="border p-2 text-gray-800 dark:text-gray-200">{user.enterprise ? user.enterprise.name : 'Sin empresa'}</td>
+                                        <td className="border p-2 text-gray-800 dark:text-gray-200">{user.roleDisplayName}</td>
+                                        <td className="border p-2 text-gray-800 dark:text-gray-200">{user.enterprise}</td>
                                         <td className="border p-2 text-gray-800 dark:text-gray-200">
                                             <div className="flex justify-center space-x-2">
                                                 <Link href={`/users/${user.id}/edit`} className="inline-flex justify-center">
