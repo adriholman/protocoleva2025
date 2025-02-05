@@ -59,27 +59,27 @@ export default function Index({ tests, csrf_token }) {
                             <tbody>
                                 {tests.length > 0 ? tests.map((test) => (
                                     <tr key={test.id} className="text-center bg-white dark:bg-gray-800">
-                                        <td className="border p-2 text-gray-800 dark:text-gray-200">{test.name}</td>
-                                        <td className="border p-2 text-gray-800 dark:text-gray-200">{test.description}</td>
-                                        <td className="border p-2 text-gray-800 dark:text-gray-200">{test.project?.name || 'Sin proyecto'}</td>
+                                        <td className="border p-2 text-gray-800 dark:text-gray-200">{test.name || 'Sin nombre'}</td>
+                                        <td className="border p-2 text-gray-800 dark:text-gray-200">{test.description || 'Sin descripción'}</td>
+                                        <td className="border p-2 text-gray-800 dark:text-gray-200">{test.project || 'Sin proyecto'}</td>
                                         <td className="border p-2 text-gray-800 dark:text-gray-200">{test.status_display_name}</td>
                                         <td className="border p-2 text-gray-800 dark:text-gray-200">
                                             <div className="flex justify-center space-x-2">
-                                                {userRole === 'admin' && test.status === 'available' && (
+                                                {(userRole === 'admin' || userRole === 'director') && test.status === 'available' && (
                                                     <Link href={`/tests/${test.id}`} className="text-blue-500 dark:text-blue-300 hover:scale-110 transition-transform" title="Ver">
                                                         <FaEye size={20} />
                                                     </Link>
                                                 )}
                                                 {userRole === 'director' && (
                                                     <>
-                                                        <Link href={`/tests/${test.id}/edit`} className="text-blue-500 dark:text-blue-300 hover:scale-110 transition-transform" title="Editar">
+                                                        <Link href={`/tests/${test.id}/edit`} className="text-orange-500 dark:text-orange-300 hover:scale-110 transition-transform" title="Editar">
                                                             <FaEdit size={20} />
                                                         </Link>
                                                         {test.status === 'draft' && (
                                                             <button
                                                                 type="button"
                                                                 onClick={() => handleToggleStatus(test.id)}
-                                                                className="text-green-500 dark:text-green-300 hover:scale-110 transition-transform"
+                                                                className="text-gray-500 dark:text-gray-300 hover:scale-110 transition-transform"
                                                                 title="Habilitar"
                                                             >
                                                                 <FaClipboard size={20} />
@@ -89,17 +89,17 @@ export default function Index({ tests, csrf_token }) {
                                                             <button
                                                                 type="button"
                                                                 onClick={() => handleToggleStatus(test.id)}
-                                                                className="text-yellow-500 dark:text-yellow-300 hover:scale-110 transition-transform"
+                                                                className="text-green-500 dark:text-green-300 hover:scale-110 transition-transform"
                                                                 title="Finalizar"
                                                             >
                                                                 <FaClipboardList size={20} />
                                                             </button>
                                                         )}
                                                         {test.status === 'finished' && (
-                                                            <FaClipboardCheck size={20} className="text-gray-500 dark:text-gray-300" title="Finalizado" />
+                                                            <FaClipboardCheck size={20} className="text-purple-500 dark:text-purple-300" title="Finalizado" />
                                                         )}
                                                         {test.status === 'available' && (
-                                                            <Link href={`/tests/${test.id}/invite`} className="text-yellow-500 dark:text-yellow-300 hover:scale-110 transition-transform" title="Invitar">
+                                                            <Link href={`/tests/${test.id}/invite`} className="text-teal-500 dark:text-teal-300 hover:scale-110 transition-transform" title="Invitar">
                                                                 <FaShareAlt size={20} />
                                                             </Link>
                                                         )}
