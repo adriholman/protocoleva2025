@@ -1,5 +1,5 @@
 import React from 'react';
-import { usePage, useForm } from '@inertiajs/react';
+import { useForm, usePage } from '@inertiajs/react';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head } from '@inertiajs/react';
 import Form from './Form';
@@ -22,10 +22,10 @@ export default function Create() {
 
     return (
         <AuthenticatedLayout>
-            <Head title="Nuevo Test" />
+            <Head title="Nueva Prueba" />
             <div className="py-12 flex justify-center">
                 <div className="bg-white shadow-sm sm:rounded-lg dark:bg-gray-800 p-6 w-full max-w-2xl">
-                    <h3 className="text-lg font-semibold mb-4 text-center text-gray-800 dark:text-gray-200">Nuevo Test</h3>
+                    <h3 className="text-lg font-semibold mb-4 text-center text-gray-800 dark:text-gray-200">Nueva Prueba</h3>
                     <Form data={data} setData={setData} errors={errors} projects={projects} handleSubmit={handleSubmit} buttonText="Guardar" />
                 </div>
             </div>

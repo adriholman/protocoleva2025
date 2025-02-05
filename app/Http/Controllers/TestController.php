@@ -50,7 +50,9 @@ class TestController extends Controller
 
     public function create()
     {
-        $projects = Project::all();
+        $user = Auth::user();
+        $projects = Project::where('enterprise_id', $user->enterprise_id)->get();
+
         return Inertia::render('Tests/Create', [
             'projects' => $projects,
         ]);
@@ -106,7 +108,9 @@ class TestController extends Controller
 
     public function edit(Test $test)
     {
-        $projects = Project::all();
+        $user = Auth::user();
+        $projects = Project::where('enterprise_id', $user->enterprise_id)->get();
+
         return Inertia::render('Tests/Edit', [
             'test' => $test->load('generalQuestions'),
             'projects' => $projects,
