@@ -84,8 +84,11 @@ class TestController extends Controller
             'tests' => $tests->map(function ($test) {
                 return [
                     'id' => $test->id,
+                    'name' => $test->name,
+                    'description' => $test->description,
                     'status' => $test->status,
                     'status_display_name' => $test->status_display_name,
+                    'project' => $test->project ? $test->project->name : 'Sin proyecto',
                 ];
             }),
             'csrf_token' => csrf_token(),
