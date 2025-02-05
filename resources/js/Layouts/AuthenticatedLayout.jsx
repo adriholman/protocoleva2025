@@ -1,17 +1,43 @@
-import React, { useState } from 'react';
-import { Link, usePage } from '@inertiajs/react';
-import ApplicationLogo from '@/Components/ApplicationLogo';
-import Dropdown from '@/Components/Dropdown';
-import NavLink from '@/Components/NavLink';
-import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
+import React, { useState, useEffect } from "react";
+import { Link, usePage } from "@inertiajs/react";
+import ApplicationLogo from "@/Components/ApplicationLogo";
+import Dropdown from "@/Components/Dropdown";
+import NavLink from "@/Components/NavLink";
+import ResponsiveNavLink from "@/Components/ResponsiveNavLink";
+import { FaSun, FaMoon } from "react-icons/fa";
 
 export default function AuthenticatedLayout({ header, children }) {
     const user = usePage().props.auth.user;
+    const [showingNavigationDropdown, setShowingNavigationDropdown] =
+        useState(false);
+    const [theme, setTheme] = useState(() => {
+        const savedTheme = localStorage.getItem("theme");
+        if (savedTheme) {
+            return savedTheme;
+        }
+        const prefersDarkMode = window.matchMedia(
+            "(prefers-color-scheme: dark)"
+        ).matches;
+        console.log("Prefers dark mode:", prefersDarkMode); // Debugging line
+        return prefersDarkMode ? "dark" : "light";
+    });
 
-    const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
+    useEffect(() => {
+        console.log("Applying theme:", theme); // Debugging line
+        document.documentElement.classList.toggle("dark", theme === "dark");
+        localStorage.setItem("theme", theme);
+    }, [theme]);
+
+    const toggleTheme = () => {
+        setTheme(theme === "light" ? "dark" : "light");
+    };
 
     return (
-        <div className="min-h-screen bg-gray-100 dark:bg-gray-900">
+        <div
+            className={`min-h-screen ${
+                theme === "dark" ? "bg-gray-900" : "bg-gray-100"
+            }`}
+        >
             <nav className="border-b border-gray-100 bg-white dark:border-gray-700 dark:bg-gray-800">
                 <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                     <div className="flex h-16 justify-between">
@@ -23,26 +49,50 @@ export default function AuthenticatedLayout({ header, children }) {
                             </div>
 
                             <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                                <NavLink href={route('dashboard')} active={route().current('dashboard')}>
+                                <NavLink
+                                    href={route("dashboard")}
+                                    active={route().current("dashboard")}
+                                >
                                     Inicio
                                 </NavLink>
-                                {user.role.name === 'admin' && (
+                                {user.role.name === "admin" && (
                                     <>
-                                        <NavLink href={route('users.index')} active={route().current('users.index')}>
+                                        <NavLink
+                                            href={route("users.index")}
+                                            active={route().current(
+                                                "users.index"
+                                            )}
+                                        >
                                             Usuarios
                                         </NavLink>
-                                        <NavLink href={route('enterprises.index')} active={route().current('enterprises.index')}>
+                                        <NavLink
+                                            href={route("enterprises.index")}
+                                            active={route().current(
+                                                "enterprises.index"
+                                            )}
+                                        >
                                             Empresas
                                         </NavLink>
                                     </>
                                 )}
-                                {(user.role.name === 'admin' || user.role.name === 'director') && (
-                                    <NavLink href={route('projects.index')} active={route().current('projects.index')}>
+                                {(user.role.name === "admin" ||
+                                    user.role.name === "director") && (
+                                    <NavLink
+                                        href={route("projects.index")}
+                                        active={route().current(
+                                            "projects.index"
+                                        )}
+                                    >
                                         Proyectos
                                     </NavLink>
                                 )}
-                                {(user.role.name === 'admin' || user.role.name === 'director' || user.role.name === 'evaluator') && (
-                                    <NavLink href={route('tests.index')} active={route().current('tests.index')}>
+                                {(user.role.name === "admin" ||
+                                    user.role.name === "director" ||
+                                    user.role.name === "evaluator") && (
+                                    <NavLink
+                                        href={route("tests.index")}
+                                        active={route().current("tests.index")}
+                                    >
                                         Pruebas
                                     </NavLink>
                                 )}
@@ -50,6 +100,16 @@ export default function AuthenticatedLayout({ header, children }) {
                         </div>
 
                         <div className="hidden sm:ms-6 sm:flex sm:items-center">
+                        <button
+                                onClick={toggleTheme}
+                                className="text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none"
+                            >
+                                {theme === 'light' ? (
+                                    <FaMoon className="text-gray-500 hover:text-gray-600" />
+                                ) : (
+                                    <FaSun className="text-yellow-500 hover:text-yellow-600" />
+                                )}
+                            </button>
                             <div className="relative ms-3">
                                 <Dropdown>
                                     <Dropdown.Trigger>
@@ -76,8 +136,16 @@ export default function AuthenticatedLayout({ header, children }) {
                                     </Dropdown.Trigger>
 
                                     <Dropdown.Content>
-                                        <Dropdown.Link href={route('profile.edit')}>Perfil</Dropdown.Link>
-                                        <Dropdown.Link href={route('logout')} method="post" as="button">
+                                        <Dropdown.Link
+                                            href={route("profile.edit")}
+                                        >
+                                            Perfil
+                                        </Dropdown.Link>
+                                        <Dropdown.Link
+                                            href={route("logout")}
+                                            method="post"
+                                            as="button"
+                                        >
                                             Cerrar sesión
                                         </Dropdown.Link>
                                     </Dropdown.Content>
@@ -87,19 +155,36 @@ export default function AuthenticatedLayout({ header, children }) {
 
                         <div className="-mr-2 flex items-center sm:hidden">
                             <button
-                                onClick={() => setShowingNavigationDropdown((previousState) => !previousState)}
+                                onClick={() =>
+                                    setShowingNavigationDropdown(
+                                        (previousState) => !previousState
+                                    )
+                                }
                                 className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 dark:text-gray-500 hover:text-gray-500 dark:hover:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-900 focus:outline-none focus:bg-gray-100 dark:focus:bg-gray-900 focus:text-gray-500 dark:focus:text-gray-400 transition duration-150 ease-in-out"
                             >
-                                <svg className="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
+                                <svg
+                                    className="h-6 w-6"
+                                    stroke="currentColor"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                >
                                     <path
-                                        className={!showingNavigationDropdown ? 'inline-flex' : 'hidden'}
+                                        className={
+                                            !showingNavigationDropdown
+                                                ? "inline-flex"
+                                                : "hidden"
+                                        }
                                         strokeLinecap="round"
                                         strokeLinejoin="round"
                                         strokeWidth="2"
                                         d="M4 6h16M4 12h16m-7 6h7"
                                     />
                                     <path
-                                        className={showingNavigationDropdown ? 'inline-flex' : 'hidden'}
+                                        className={
+                                            showingNavigationDropdown
+                                                ? "inline-flex"
+                                                : "hidden"
+                                        }
                                         strokeLinecap="round"
                                         strokeLinejoin="round"
                                         strokeWidth="2"
@@ -111,31 +196,53 @@ export default function AuthenticatedLayout({ header, children }) {
                     </div>
                 </div>
 
-                <div className={(showingNavigationDropdown ? 'block' : 'hidden') + ' sm:hidden'}>
+                <div
+                    className={
+                        (showingNavigationDropdown ? "block" : "hidden") +
+                        " sm:hidden"
+                    }
+                >
                     <div className="space-y-1 pb-3 pt-2">
                         <ResponsiveNavLink
-                            href={route('dashboard')}
-                            active={route().current('dashboard')}
+                            href={route("dashboard")}
+                            active={route().current("dashboard")}
                         >
                             Inicio
                         </ResponsiveNavLink>
-                        {user.role.name === 'admin' && (
+                        {user.role.name === "admin" && (
                             <>
-                                <ResponsiveNavLink href={route('users.index')} active={route().current('users.index')}>
+                                <ResponsiveNavLink
+                                    href={route("users.index")}
+                                    active={route().current("users.index")}
+                                >
                                     Usuarios
                                 </ResponsiveNavLink>
-                                <ResponsiveNavLink href={route('enterprises.index')} active={route().current('enterprises.index')}>
+                                <ResponsiveNavLink
+                                    href={route("enterprises.index")}
+                                    active={route().current(
+                                        "enterprises.index"
+                                    )}
+                                >
                                     Empresas
                                 </ResponsiveNavLink>
                             </>
                         )}
-                        {(user.role.name === 'admin' || user.role.name === 'director') && (
-                            <ResponsiveNavLink href={route('projects.index')} active={route().current('projects.index')}>
+                        {(user.role.name === "admin" ||
+                            user.role.name === "director") && (
+                            <ResponsiveNavLink
+                                href={route("projects.index")}
+                                active={route().current("projects.index")}
+                            >
                                 Proyectos
                             </ResponsiveNavLink>
                         )}
-                        {(user.role.name === 'admin' || user.role.name === 'director' || user.role.name === 'evaluator') && (
-                            <ResponsiveNavLink href={route('tests.index')} active={route().current('tests.index')}>
+                        {(user.role.name === "admin" ||
+                            user.role.name === "director" ||
+                            user.role.name === "evaluator") && (
+                            <ResponsiveNavLink
+                                href={route("tests.index")}
+                                active={route().current("tests.index")}
+                            >
                                 Pruebas
                             </ResponsiveNavLink>
                         )}
@@ -152,12 +259,12 @@ export default function AuthenticatedLayout({ header, children }) {
                         </div>
 
                         <div className="mt-3 space-y-1">
-                            <ResponsiveNavLink href={route('profile.edit')}>
+                            <ResponsiveNavLink href={route("profile.edit")}>
                                 Perfil
                             </ResponsiveNavLink>
                             <ResponsiveNavLink
                                 method="post"
-                                href={route('logout')}
+                                href={route("logout")}
                                 as="button"
                             >
                                 Cerrar sesión
@@ -169,7 +276,9 @@ export default function AuthenticatedLayout({ header, children }) {
 
             {header && (
                 <header className="bg-white shadow dark:bg-gray-800">
-                    <div className="mx-auto max-w-7xl py-6 px-4 sm:px-6 lg:px-8">{header}</div>
+                    <div className="mx-auto max-w-7xl py-6 px-4 sm:px-6 lg:px-8">
+                        {header}
+                    </div>
                 </header>
             )}
 
