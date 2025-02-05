@@ -32,6 +32,7 @@ class EnterpriseController extends Controller
             'email' => 'required|string|email|max:255|unique:enterprises',
             'website' => 'nullable|string',
             'nif' => 'required|string|max:255|unique:enterprises',
+            'phone' => 'nullable|string|max:255',
         ]);
 
         Enterprise::create($request->all());
@@ -62,6 +63,7 @@ class EnterpriseController extends Controller
             'email' => 'required|string|email|max:255|unique:enterprises,email,' . $enterprise->id,
             'website' => 'nullable|string',
             'nif' => 'required|string|max:255|unique:enterprises,nif,' . $enterprise->id,
+            'phone' => 'nullable|string|max:255',
         ]);
 
         $enterprise->update($request->all());

@@ -24,26 +24,26 @@ export default function AuthenticatedLayout({ header, children }) {
 
                             <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                                 <NavLink href={route('dashboard')} active={route().current('dashboard')}>
-                                    Dashboard
+                                    Inicio
                                 </NavLink>
                                 {user.role.name === 'admin' && (
                                     <>
                                         <NavLink href={route('users.index')} active={route().current('users.index')}>
-                                            Users
+                                            Usuarios
                                         </NavLink>
                                         <NavLink href={route('enterprises.index')} active={route().current('enterprises.index')}>
-                                            Enterprises
+                                            Empresas
                                         </NavLink>
                                     </>
                                 )}
                                 {(user.role.name === 'admin' || user.role.name === 'director') && (
                                     <NavLink href={route('projects.index')} active={route().current('projects.index')}>
-                                        Projects
+                                        Proyectos
                                     </NavLink>
                                 )}
                                 {(user.role.name === 'admin' || user.role.name === 'director' || user.role.name === 'evaluator') && (
                                     <NavLink href={route('tests.index')} active={route().current('tests.index')}>
-                                        Tests
+                                        Pruebas
                                     </NavLink>
                                 )}
                             </div>
@@ -76,9 +76,9 @@ export default function AuthenticatedLayout({ header, children }) {
                                     </Dropdown.Trigger>
 
                                     <Dropdown.Content>
-                                        <Dropdown.Link href={route('profile.edit')}>Profile</Dropdown.Link>
+                                        <Dropdown.Link href={route('profile.edit')}>Perfil</Dropdown.Link>
                                         <Dropdown.Link href={route('logout')} method="post" as="button">
-                                            Log Out
+                                            Cerrar sesión
                                         </Dropdown.Link>
                                     </Dropdown.Content>
                                 </Dropdown>
@@ -117,26 +117,26 @@ export default function AuthenticatedLayout({ header, children }) {
                             href={route('dashboard')}
                             active={route().current('dashboard')}
                         >
-                            Dashboard
+                            Inicio
                         </ResponsiveNavLink>
                         {user.role.name === 'admin' && (
                             <>
                                 <ResponsiveNavLink href={route('users.index')} active={route().current('users.index')}>
-                                    Users
+                                    Usuarios
                                 </ResponsiveNavLink>
                                 <ResponsiveNavLink href={route('enterprises.index')} active={route().current('enterprises.index')}>
-                                    Enterprises
+                                    Empresas
                                 </ResponsiveNavLink>
                             </>
                         )}
                         {(user.role.name === 'admin' || user.role.name === 'director') && (
                             <ResponsiveNavLink href={route('projects.index')} active={route().current('projects.index')}>
-                                Projects
+                                Proyectos
                             </ResponsiveNavLink>
                         )}
                         {(user.role.name === 'admin' || user.role.name === 'director' || user.role.name === 'evaluator') && (
                             <ResponsiveNavLink href={route('tests.index')} active={route().current('tests.index')}>
-                                Tests
+                                Pruebas
                             </ResponsiveNavLink>
                         )}
                     </div>
@@ -153,14 +153,14 @@ export default function AuthenticatedLayout({ header, children }) {
 
                         <div className="mt-3 space-y-1">
                             <ResponsiveNavLink href={route('profile.edit')}>
-                                Profile
+                                Perfil
                             </ResponsiveNavLink>
                             <ResponsiveNavLink
                                 method="post"
                                 href={route('logout')}
                                 as="button"
                             >
-                                Log Out
+                                Cerrar sesión
                             </ResponsiveNavLink>
                         </div>
                     </div>
