@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, usePage, Head } from '@inertiajs/react';
-import { FaPlus, FaEye, FaPlay, FaShareAlt, FaEdit, FaCheck } from 'react-icons/fa';
+import { FaPlus, FaEye, FaPlay, FaShareAlt, FaEdit, FaCheck, FaClipboardList, FaClipboardCheck, FaClipboard } from 'react-icons/fa';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 
 export default function Index({ tests, csrf_token }) {
@@ -66,13 +66,13 @@ export default function Index({ tests, csrf_token }) {
                                         <td className="border p-2 text-gray-800 dark:text-gray-200">
                                             <div className="flex justify-center space-x-2">
                                                 {userRole === 'admin' && test.status === 'available' && (
-                                                    <Link href={`/tests/${test.id}`} className="text-blue-500 dark:text-blue-300 hover:scale-110 transition-transform">
+                                                    <Link href={`/tests/${test.id}`} className="text-blue-500 dark:text-blue-300 hover:scale-110 transition-transform" title="Ver">
                                                         <FaEye size={20} />
                                                     </Link>
                                                 )}
                                                 {userRole === 'director' && (
                                                     <>
-                                                        <Link href={`/tests/${test.id}/edit`} className="text-blue-500 dark:text-blue-300 hover:scale-110 transition-transform">
+                                                        <Link href={`/tests/${test.id}/edit`} className="text-blue-500 dark:text-blue-300 hover:scale-110 transition-transform" title="Editar">
                                                             <FaEdit size={20} />
                                                         </Link>
                                                         {test.status === 'draft' && (
@@ -80,19 +80,33 @@ export default function Index({ tests, csrf_token }) {
                                                                 type="button"
                                                                 onClick={() => handleToggleStatus(test.id)}
                                                                 className="text-green-500 dark:text-green-300 hover:scale-110 transition-transform"
+                                                                title="Habilitar"
                                                             >
-                                                                <FaCheck size={20} />
+                                                                <FaClipboard size={20} />
                                                             </button>
                                                         )}
                                                         {test.status === 'available' && (
-                                                            <Link href={`/tests/${test.id}/invite`} className="text-yellow-500 dark:text-yellow-300 hover:scale-110 transition-transform">
+                                                            <button
+                                                                type="button"
+                                                                onClick={() => handleToggleStatus(test.id)}
+                                                                className="text-yellow-500 dark:text-yellow-300 hover:scale-110 transition-transform"
+                                                                title="Finalizar"
+                                                            >
+                                                                <FaClipboardList size={20} />
+                                                            </button>
+                                                        )}
+                                                        {test.status === 'finished' && (
+                                                            <FaClipboardCheck size={20} className="text-gray-500 dark:text-gray-300" title="Finalizado" />
+                                                        )}
+                                                        {test.status === 'available' && (
+                                                            <Link href={`/tests/${test.id}/invite`} className="text-yellow-500 dark:text-yellow-300 hover:scale-110 transition-transform" title="Invitar">
                                                                 <FaShareAlt size={20} />
                                                             </Link>
                                                         )}
                                                     </>
                                                 )}
                                                 {userRole === 'evaluator' && test.status === 'available' && test.users[0]?.pivot?.completed === 0 && (
-                                                    <Link href={`/tests/${test.id}/complete`} className="text-green-500 dark:text-green-300 hover:scale-110 transition-transform">
+                                                    <Link href={`/tests/${test.id}/complete`} className="text-green-500 dark:text-green-300 hover:scale-110 transition-transform" title="Completar test">
                                                         <FaPlay size={20} />
                                                     </Link>
                                                 )}

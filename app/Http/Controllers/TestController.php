@@ -64,7 +64,6 @@ class TestController extends Controller
             'values' => 'required|string',
             'value_options' => 'required|string',
             'project_id' => 'required|exists:projects,id',
-            'status' => 'required|in:draft,available,finished',
             'general_questions' => 'array',
             'general_questions.*.name' => 'required|string|max:255',
             'general_questions.*.options' => 'required|string',
@@ -78,8 +77,15 @@ class TestController extends Controller
             return redirect()->back()->withErrors(['project_id' => 'Este proyecto ha alcanzado su límite de pruebas.']);
         }
 
-        // Store the test
-        $test = Test::create($request->all());
+        // Store the test with default status 'draft'
+        $test = Test::create([
+            'name' => $request->name,
+            'description' => $request->description,
+            'values' => $request->values,
+            'value_options' => $request->value_options,
+            'project_id' => $request->project_id,
+            'status' => 'draft', // Set default status to 'draft'
+        ]);
 
         if ($request->has('general_questions')) {
             foreach ($request->general_questions as $question) {
@@ -137,25 +143,6 @@ class TestController extends Controller
         $test->delete();
 
         return Redirect::route('tests.index')->with('success', 'Test deleted successfully.');
-    }
-
-    public function toggleReady(Test $test)
-    {
-        if (!$test->is_ready) {
-            // Generate records in the value_question table
-            $values = explode(',', $test->values);
-            foreach ($values as $value) {
-                ValueQuestion::create([
-                    'test_id' => $test->id,
-                    'name' => trim($value),
-                ]);
-            }
-        }
-
-        $test->is_ready = !$test->is_ready;
-        $test->save();
-
-        return Redirect::route('tests.index')->with('success', 'Test readiness status updated successfully.');
     }
 
     public function complete($id)
@@ -228,16 +215,24 @@ class TestController extends Controller
         return redirect()->route('tests.index')->with('success', 'Users invited successfully.');
     }
 
-    public function toggleStatus($id)
+    public function toggleStatus(Test $test)
     {
-        $test = Test::findOrFail($id);
         if ($test->status === 'draft') {
+            // Generate records in the value_question table
+            $values = explode(',', $test->values);
+            foreach ($values as $value) {
+                ValueQuestion::create([
+                    'test_id' => $test->id,
+                    'name' => trim($value),
+                ]);
+            }
             $test->status = 'available';
         } elseif ($test->status === 'available') {
             $test->status = 'finished';
         }
+
         $test->save();
 
-        return redirect()->route('tests.index')->with('success', 'Test status updated successfully.');
+        return Redirect::route('tests.index')->with('success', 'Test status updated successfully.');
     }
 }
