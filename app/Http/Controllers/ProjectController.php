@@ -18,12 +18,12 @@ class ProjectController extends Controller
 
         if ($user->role->name === 'admin') {
             // Admins can see all projects
-            $projects = Project::with('enterprise')->paginate(10);
+            $projects = Project::with('enterprise')->paginate(14);
         } elseif ($user->role->name === 'director') {
             // Directors can only see projects from their enterprise
             $projects = Project::with('enterprise')
                 ->where('enterprise_id', $user->enterprise_id)
-                ->paginate(10);
+                ->paginate(14);
         }
 
         return Inertia::render('Projects/Index', [

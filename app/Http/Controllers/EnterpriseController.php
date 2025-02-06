@@ -12,7 +12,7 @@ class EnterpriseController extends Controller
 {
     public function index()
     {
-        $enterprises = Enterprise::paginate(10);
+        $enterprises = Enterprise::paginate(14);
 
         return Inertia::render('Enterprises/Index', [
             'enterprises' => $enterprises,
