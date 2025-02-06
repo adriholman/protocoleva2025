@@ -49,11 +49,12 @@ class TestController extends Controller
             'tests' => $tests->map(function ($test) {
                 return [
                     'id' => $test->id,
-                    'name' => $test->name,
-                    'description' => $test->description,
+                    'name' => $test->name ?? 'Sin nombre',
+                    'description' => $test->description ?? 'Sin descripción',
                     'status' => $test->status,
                     'status_display_name' => $test->status_display_name,
                     'project' => $test->project ? $test->project->name : 'Sin proyecto',
+                    'users' => $test->users,
                 ];
             }),
             'csrf_token' => csrf_token(),
@@ -181,24 +182,28 @@ class TestController extends Controller
         ]);
 
         $user = Auth::user();
+        $test = Test::findOrFail($id);
 
+        // Save general answers
         foreach ($request->general_answers as $answer) {
-            GeneralAnswer::create([
+            $test->generalQuestions()->where('id', $answer['question_id'])->first()->answers()->create([
                 'user_id' => $user->id,
-                'general_question_id' => $answer['question_id'],
                 'answer' => $answer['answer'],
             ]);
         }
 
+        // Save value answers
         foreach ($request->value_answers as $answer) {
-            ValueAnswer::create([
+            $test->valueQuestions()->where('id', $answer['question_id'])->first()->answers()->create([
                 'user_id' => $user->id,
-                'value_question_id' => $answer['question_id'],
                 'answer' => $answer['answer'],
             ]);
         }
 
-        return redirect()->route('tests.index')->with('success', 'Test completed successfully.');
+        // Mark the test as completed for the user
+        $test->users()->updateExistingPivot($user->id, ['completed' => 1]);
+
+        return Redirect::route('tests.index')->with('success', 'Test completed successfully.');
     }
 
     public function invite($id)

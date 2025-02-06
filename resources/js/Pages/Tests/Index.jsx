@@ -79,7 +79,7 @@ export default function Index({ tests, csrf_token }) {
                                                             <button
                                                                 type="button"
                                                                 onClick={() => handleToggleStatus(test.id)}
-                                                                className="text-gray-500 dark:text-gray-300 hover:scale-110 transition-transform"
+                                                                className="text-green-500 dark:text-green-300 hover:scale-110 transition-transform"
                                                                 title="Habilitar"
                                                             >
                                                                 <FaClipboard size={20} />
@@ -89,17 +89,17 @@ export default function Index({ tests, csrf_token }) {
                                                             <button
                                                                 type="button"
                                                                 onClick={() => handleToggleStatus(test.id)}
-                                                                className="text-green-500 dark:text-green-300 hover:scale-110 transition-transform"
+                                                                className="text-yellow-500 dark:text-yellow-300 hover:scale-110 transition-transform"
                                                                 title="Finalizar"
                                                             >
                                                                 <FaClipboardList size={20} />
                                                             </button>
                                                         )}
                                                         {test.status === 'finished' && (
-                                                            <FaClipboardCheck size={20} className="text-purple-500 dark:text-purple-300" title="Finalizado" />
+                                                            <FaClipboardCheck size={20} className="text-gray-500 dark:text-gray-300" title="Finalizado" />
                                                         )}
                                                         {test.status === 'available' && (
-                                                            <Link href={`/tests/${test.id}/invite`} className="text-teal-500 dark:text-teal-300 hover:scale-110 transition-transform" title="Invitar">
+                                                            <Link href={`/tests/${test.id}/invite`} className="text-yellow-500 dark:text-yellow-300 hover:scale-110 transition-transform" title="Invitar">
                                                                 <FaShareAlt size={20} />
                                                             </Link>
                                                         )}
@@ -133,7 +133,6 @@ export default function Index({ tests, csrf_token }) {
                                 Siguiente &raquo;
                             </button>
                         </div>
-
                     </div>
                 </div>
             </div>

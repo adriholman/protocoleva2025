@@ -7,6 +7,7 @@ import ResponsiveNavLink from "@/Components/ResponsiveNavLink";
 import { FaSun, FaMoon } from "react-icons/fa";
 
 export default function AuthenticatedLayout({ header, children }) {
+    const { flash } = usePage().props;
     const user = usePage().props.auth.user;
     const [showingNavigationDropdown, setShowingNavigationDropdown] =
         useState(false);
@@ -100,11 +101,11 @@ export default function AuthenticatedLayout({ header, children }) {
                         </div>
 
                         <div className="hidden sm:ms-6 sm:flex sm:items-center">
-                        <button
+                            <button
                                 onClick={toggleTheme}
                                 className="text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none"
                             >
-                                {theme === 'light' ? (
+                                {theme === "light" ? (
                                     <FaMoon className="text-gray-500 hover:text-gray-600" />
                                 ) : (
                                     <FaSun className="text-yellow-500 hover:text-yellow-600" />
