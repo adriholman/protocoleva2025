@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, usePage, Head } from '@inertiajs/react';
-import { FaPlus, FaEye, FaPlay, FaShareAlt, FaEdit, FaCheck, FaClipboardList, FaClipboardCheck, FaClipboard } from 'react-icons/fa';
+import { FaPlus, FaEye, FaPlay, FaShareAlt, FaEdit, FaCheck, FaClipboardList, FaClipboardCheck, FaClipboard, FaChartBar } from 'react-icons/fa';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import Pagination from '@/Components/Pagination';
 
@@ -97,7 +97,12 @@ export default function Index({ tests, csrf_token }) {
                                                             </button>
                                                         )}
                                                         {test.status === 'finished' && (
-                                                            <FaClipboardCheck size={20} className="text-gray-500 dark:text-gray-300" title="Finalizado" />
+                                                            <>
+                                                                <FaClipboardCheck size={20} className="text-gray-500 dark:text-gray-300" title="Finalizado" />
+                                                                <Link href={`/tests/${test.id}/results`} className="text-blue-500 dark:text-blue-300 hover:scale-110 transition-transform" title="Ver Resultados">
+                                                                    <FaChartBar size={20} />
+                                                                </Link>
+                                                            </>
                                                         )}
                                                         {test.status === 'available' && (
                                                             <Link href={`/tests/${test.id}/invite`} className="text-yellow-500 dark:text-yellow-300 hover:scale-110 transition-transform" title="Invitar">

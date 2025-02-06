@@ -47,6 +47,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 // Routes accessible by admin, director, and evaluator
 Route::middleware(['auth', 'role:admin,director,evaluator'])->group(function () {
     Route::get('tests', [TestController::class, 'index'])->name('tests.index');
+    Route::get('tests/{id}/results', [TestController::class, 'results'])->name('tests.results');
 });
 
 // Routes accessible by both admin and director

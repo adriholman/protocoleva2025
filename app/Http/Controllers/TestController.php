@@ -265,4 +265,12 @@ class TestController extends Controller
 
         return Redirect::route('tests.index')->with('success', 'Test status updated successfully.');
     }
+
+    public function results($id)
+    {
+        $test = Test::with(['generalQuestions.answers', 'valueQuestions.answers'])->findOrFail($id);
+        return Inertia::render('Tests/Results', [
+            'test' => $test,
+        ]);
+    }
 }
