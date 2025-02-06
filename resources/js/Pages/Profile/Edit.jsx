@@ -1,10 +1,10 @@
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head } from '@inertiajs/react';
-import DeleteUserForm from './Partials/DeleteUserForm';
-import UpdatePasswordForm from './Partials/UpdatePasswordForm';
-import UpdateProfileInformationForm from './Partials/UpdateProfileInformationForm';
+import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
+import { Head } from "@inertiajs/react";
+import DeleteUserForm from "./Partials/DeleteUserForm";
+import UpdatePasswordForm from "./Partials/UpdatePasswordForm";
+import UpdateProfileInformationForm from "./Partials/UpdateProfileInformationForm";
 
-export default function Edit({ mustVerifyEmail, status }) {
+export default function Edit({ mustVerifyEmail, status, user }) {
     return (
         <AuthenticatedLayout
             header={
@@ -23,6 +23,15 @@ export default function Edit({ mustVerifyEmail, status }) {
                             status={status}
                             className="max-w-xl"
                         />
+                    </div>
+
+                    <div className="bg-white p-4 shadow sm:rounded-lg sm:p-8 dark:bg-gray-800">
+                        <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100">
+                            Rol del Usuario
+                        </h3>
+                        <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">
+                            {user.roleDisplayName}
+                        </p>
                     </div>
 
                     <div className="bg-white p-4 shadow sm:rounded-lg sm:p-8 dark:bg-gray-800">
