@@ -23,14 +23,14 @@ class TestController extends Controller
 
         if ($user->role->name === 'admin') {
             // Admins can see all tests
-            $tests = Test::with('project')->get();
+            $tests = Test::with('project')->paginate(10);
         } elseif ($user->role->name === 'director') {
             // Directors can only see tests from their enterprise
             $tests = Test::with('project')
                 ->whereHas('project', function ($query) use ($user) {
                     $query->where('enterprise_id', $user->enterprise_id);
                 })
-                ->get();
+                ->paginate(10);
         } elseif ($user->role->name === 'evaluator') {
             // Evaluators can only see tests they were invited to
             $tests = Test::with([
@@ -42,11 +42,11 @@ class TestController extends Controller
                 ->whereHas('users', function ($query) use ($user) {
                     $query->where('user_id', $user->id);
                 })
-                ->get();
+                ->paginate(10);
         }
 
         return Inertia::render('Tests/Index', [
-            'tests' => $tests->map(function ($test) {
+            'tests' => $tests->through(function ($test) {
                 return [
                     'id' => $test->id,
                     'name' => $test->name ?? 'Sin nombre',

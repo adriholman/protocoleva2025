@@ -2,6 +2,7 @@ import React from 'react';
 import { Link, usePage, Head } from '@inertiajs/react';
 import { FaPlus, FaEye, FaPlay, FaShareAlt, FaEdit, FaCheck, FaClipboardList, FaClipboardCheck, FaClipboard } from 'react-icons/fa';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
+import Pagination from '@/Components/Pagination';
 
 export default function Index({ tests, csrf_token }) {
     const { auth } = usePage().props;
@@ -57,15 +58,15 @@ export default function Index({ tests, csrf_token }) {
                                 </tr>
                             </thead>
                             <tbody>
-                                {tests.length > 0 ? tests.map((test) => (
+                                {tests.data.length > 0 ? tests.data.map((test) => (
                                     <tr key={test.id} className="text-center bg-white dark:bg-gray-800">
-                                        <td className="border p-2 text-gray-800 dark:text-gray-200">{test.name || 'Sin nombre'}</td>
-                                        <td className="border p-2 text-gray-800 dark:text-gray-200">{test.description || 'Sin descripción'}</td>
-                                        <td className="border p-2 text-gray-800 dark:text-gray-200">{test.project || 'Sin proyecto'}</td>
+                                        <td className="border p-2 text-gray-800 dark:text-gray-200">{test.name}</td>
+                                        <td className="border p-2 text-gray-800 dark:text-gray-200">{test.description}</td>
+                                        <td className="border p-2 text-gray-800 dark:text-gray-200">{test.project}</td>
                                         <td className="border p-2 text-gray-800 dark:text-gray-200">{test.status_display_name}</td>
                                         <td className="border p-2 text-gray-800 dark:text-gray-200">
                                             <div className="flex justify-center space-x-2">
-                                                {(userRole === 'admin' || userRole === 'director') && test.status === 'available' && (
+                                                {(userRole === 'admin' || userRole === 'director') && (
                                                     <Link href={`/tests/${test.id}`} className="text-blue-500 dark:text-blue-300 hover:scale-110 transition-transform" title="Ver">
                                                         <FaEye size={20} />
                                                     </Link>
@@ -106,7 +107,7 @@ export default function Index({ tests, csrf_token }) {
                                                     </>
                                                 )}
                                                 {userRole === 'evaluator' && test.status === 'available' && test.users[0]?.pivot?.completed === 0 && (
-                                                    <Link href={`/tests/${test.id}/complete`} className="text-green-500 dark:text-green-300 hover:scale-110 transition-transform" title="Completar test">
+                                                    <Link href={`/tests/${test.id}/complete`} className="text-green-500 dark:text-green-300 hover:scale-110 transition-transform" title="Completar">
                                                         <FaPlay size={20} />
                                                     </Link>
                                                 )}
@@ -123,16 +124,9 @@ export default function Index({ tests, csrf_token }) {
                             </tbody>
                         </table>
 
-                        {/* Paginación Estática */}
-                        <div className="mt-4 flex justify-center space-x-2">
-                            <button className="px-3 py-1 border rounded-md bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-200 cursor-not-allowed">
-                                &laquo; Anterior
-                            </button>
-                            <span className="px-3 py-1 border rounded-md bg-blue-500 text-white">1</span>
-                            <button className="px-3 py-1 border rounded-md bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-200 cursor-not-allowed">
-                                Siguiente &raquo;
-                            </button>
-                        </div>
+                        {/* Paginación */}
+                        <Pagination links={tests.links} />
+
                     </div>
                 </div>
             </div>

@@ -3,6 +3,7 @@ import { Link } from '@inertiajs/react';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head } from '@inertiajs/react';
 import { FaEdit, FaPlus } from 'react-icons/fa';
+import Pagination from '@/Components/Pagination';
 
 export default function EnterprisesIndex({ enterprises }) {
     return (
@@ -32,39 +33,25 @@ export default function EnterprisesIndex({ enterprises }) {
                                 <tr className="bg-gray-100 dark:bg-gray-700">
                                     <th className="border p-2 text-gray-800 dark:text-gray-200">Nombre</th>
                                     <th className="border p-2 text-gray-800 dark:text-gray-200">Correo</th>
-                                    <th className="border p-2 text-gray-800 dark:text-gray-200">NIF</th>
-                                    <th className="border p-2 text-gray-800 dark:text-gray-200">Descripción</th>
-                                    <th className="border p-2 text-gray-800 dark:text-gray-200">Dirección</th>
-                                    <th className="border p-2 text-gray-800 dark:text-gray-200">Teléfono</th>
-                                    <th className="border p-2 text-gray-800 dark:text-gray-200">Sitio Web</th>
                                     <th className="border p-2 text-gray-800 dark:text-gray-200">Acciones</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {enterprises.length > 0 ? enterprises.map((enterprise) => (
+                                {enterprises.data.length > 0 ? enterprises.data.map((enterprise) => (
                                     <tr key={enterprise.id} className="text-center bg-white dark:bg-gray-800">
                                         <td className="border p-2 text-gray-800 dark:text-gray-200">{enterprise.name}</td>
                                         <td className="border p-2 text-gray-800 dark:text-gray-200">{enterprise.email}</td>
-                                        <td className="border p-2 text-gray-800 dark:text-gray-200">{enterprise.nif}</td>
-                                        <td className="border p-2 text-gray-800 dark:text-gray-200">{enterprise.description}</td>
-                                        <td className="border p-2 text-gray-800 dark:text-gray-200">{enterprise.address}</td>
-                                        <td className="border p-2 text-gray-800 dark:text-gray-200">{enterprise.phone}</td>
-                                        <td className="border p-2 text-gray-800 dark:text-gray-200">
-                                            <Link href={enterprise.website} target="_blank" className="text-blue-500 dark:text-blue-300 hover:underline">
-                                                {enterprise.website}
-                                            </Link>
-                                        </td>
                                         <td className="border p-2 text-gray-800 dark:text-gray-200">
                                             <div className="flex justify-center space-x-2">
-                                                <Link href={`/enterprises/${enterprise.id}/edit`} className="text-blue-500 dark:text-blue-300 hover:scale-110 transition-transform">
-                                                    <FaEdit size={20} />
+                                                <Link href={`/enterprises/${enterprise.id}/edit`} className="inline-flex justify-center">
+                                                    <FaEdit size={20} className="text-blue-500 dark:text-blue-300" />
                                                 </Link>
                                             </div>
                                         </td>
                                     </tr>
                                 )) : (
                                     <tr>
-                                        <td colSpan="8" className="border p-2 text-gray-800 dark:text-gray-200 text-center">
+                                        <td colSpan="3" className="border p-2 text-gray-800 dark:text-gray-200 text-center">
                                             No se encontraron empresas.
                                         </td>
                                     </tr>
@@ -72,16 +59,8 @@ export default function EnterprisesIndex({ enterprises }) {
                             </tbody>
                         </table>
 
-                        {/* Paginación Estática */}
-                        <div className="mt-4 flex justify-center space-x-2">
-                            <button className="px-3 py-1 border rounded-md bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-200 cursor-not-allowed">
-                                &laquo; Anterior
-                            </button>
-                            <span className="px-3 py-1 border rounded-md bg-blue-500 text-white">1</span>
-                            <button className="px-3 py-1 border rounded-md bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-200 cursor-not-allowed">
-                                Siguiente &raquo;
-                            </button>
-                        </div>
+                        {/* Paginación */}
+                        <Pagination links={enterprises.links} />
 
                     </div>
                 </div>

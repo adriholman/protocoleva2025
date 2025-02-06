@@ -3,6 +3,7 @@ import { Link } from '@inertiajs/react';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head } from '@inertiajs/react';
 import { FaEdit, FaPlus } from 'react-icons/fa';
+import Pagination from '@/Components/Pagination';
 
 export default function ProjectsIndex({ projects }) {
     return (
@@ -38,7 +39,7 @@ export default function ProjectsIndex({ projects }) {
                                 </tr>
                             </thead>
                             <tbody>
-                                {projects.length > 0 ? projects.map((project) => (
+                                {projects.data.length > 0 ? projects.data.map((project) => (
                                     <tr key={project.id} className="text-center bg-white dark:bg-gray-800">
                                         <td className="border p-2 text-gray-800 dark:text-gray-200">{project.name}</td>
                                         <td className="border p-2 text-gray-800 dark:text-gray-200">{project.description}</td>
@@ -62,16 +63,8 @@ export default function ProjectsIndex({ projects }) {
                             </tbody>
                         </table>
 
-                        {/* Paginación Estática */}
-                        <div className="mt-4 flex justify-center space-x-2">
-                            <button className="px-3 py-1 border rounded-md bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-200 cursor-not-allowed">
-                                &laquo; Anterior
-                            </button>
-                            <span className="px-3 py-1 border rounded-md bg-blue-500 text-white">1</span>
-                            <button className="px-3 py-1 border rounded-md bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-200 cursor-not-allowed">
-                                Siguiente &raquo;
-                            </button>
-                        </div>
+                        {/* Paginación */}
+                        <Pagination links={projects.links} />
 
                     </div>
                 </div>

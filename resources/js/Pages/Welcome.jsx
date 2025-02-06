@@ -53,19 +53,19 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                                         >
                                             Log in
                                         </Link>
-                                        {/*                                         <Link
-                                            href={route('register')}
+                                        <Link
+                                            href={route("register")}
                                             className="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white"
                                         >
                                             Register
-                                        </Link> */}
+                                        </Link>
                                     </>
                                 )}
                             </nav>
                         </header>
 
                         <main className="mt-6">
-{/*                             <div className="grid gap-6 lg:grid-cols-2 lg:gap-8">
+                            <div className="grid gap-6 lg:grid-cols-2 lg:gap-8">
                                 <a
                                     href="https://laravel.com/docs"
                                     id="docs-card"
@@ -347,7 +347,7 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                                         </p>
                                     </div>
                                 </div>
-                            </div> */}
+                            </div>
                         </main>
 
                         <footer className="py-16 text-center text-sm text-black dark:text-white/70">

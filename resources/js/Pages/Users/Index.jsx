@@ -1,8 +1,8 @@
 import React from 'react';
-import { usePage, Link } from '@inertiajs/react';
+import { usePage, Link, Head } from '@inertiajs/react';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head } from '@inertiajs/react';
 import { FaEdit, FaPlus } from 'react-icons/fa';
+import Pagination from '@/Components/Pagination';
 
 export default function Index() {
     const { users } = usePage().props;
@@ -39,7 +39,7 @@ export default function Index() {
                                 </tr>
                             </thead>
                             <tbody>
-                                {users.length > 0 ? users.map((user) => (
+                                {users.data.length > 0 ? users.data.map((user) => (
                                     <tr key={user.id} className="text-center bg-white dark:bg-gray-800">
                                         <td className="border p-2 text-gray-800 dark:text-gray-200">{user.name}</td>
                                         <td className="border p-2 text-gray-800 dark:text-gray-200">{user.email}</td>
@@ -63,21 +63,12 @@ export default function Index() {
                             </tbody>
                         </table>
 
-                        {/* Paginación Estática */}
-                        <div className="mt-4 flex justify-center space-x-2">
-                            <button className="px-3 py-1 border rounded-md bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-200 cursor-not-allowed">
-                                &laquo; Anterior
-                            </button>
-                            <span className="px-3 py-1 border rounded-md bg-blue-500 text-white">1</span>
-                            <button className="px-3 py-1 border rounded-md bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-200 cursor-not-allowed">
-                                Siguiente &raquo;
-                            </button>
-                        </div>
+                        {/* Paginación */}
+                        <Pagination links={users.links} />
 
                     </div>
                 </div>
             </div>
         </AuthenticatedLayout>
     );
-
 }
