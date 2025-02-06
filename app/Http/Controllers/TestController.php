@@ -209,8 +209,17 @@ class TestController extends Controller
     public function invite($id)
     {
         $test = Test::findOrFail($id);
+
         $invitedUsers = DB::table('user_test')->where('test_id', $id)->pluck('user_id')->toArray();
-        $users = User::whereNotIn('id', $invitedUsers)->get();
+
+        $users = User::whereNotIn('id', $invitedUsers)
+            ->where('role_id', function ($query) {
+                $query->select('id')
+                    ->from('roles')
+                    ->where('name', 'evaluator')
+                    ->limit(1);
+            })
+            ->get();
 
         return Inertia::render('Tests/Invite', [
             'test' => $test,

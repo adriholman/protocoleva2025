@@ -24,16 +24,17 @@ export default function Invite() {
                         Enviar invitacion
                     </h3>
                     <h6 className="text-lg  mb-4 text-center text-gray-800 dark:text-gray-200">
-                       Invita a realizar a el test  "{test.name}"
+                       Invita a realizar la prueba "{test.name}"
                     </h6>
 
                     <form onSubmit={handleSubmit} className="space-y-4">
                         {/* Selección de Usuarios */}
                         <div>
-                            <label className="block text-gray-700 dark:text-gray-300">Seleccionar Usuarios</label>
+                            <h4 className="text-gray-700 dark:text-gray-300 font-semibold mb-2">Seleccionar Usuarios</h4>
                             <select
                                 multiple
                                 className="border rounded-lg p-2 w-full dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200 focus:ring-2 focus:ring-blue-500"
+                                style={{ height: '250px' }} // Adjust the height as needed
                                 value={data.user_ids}
                                 onChange={(e) =>
                                     setData('user_ids', [...e.target.selectedOptions].map(option => option.value))
@@ -47,9 +48,10 @@ export default function Invite() {
                         </div>
 
                         {/* Lista de Usuarios Seleccionados */}
+                        <h4 className="text-gray-700 dark:text-gray-300 font-semibold mb-2">Usuarios Seleccionados</h4>
                         {data.user_ids.length > 0 && (
-                            <div className="p-4 bg-gray-100 dark:bg-gray-700 rounded-md">
-                                <h4 className="text-gray-700 dark:text-gray-300 font-semibold mb-2">Usuarios Seleccionados:</h4>
+                            <div className="p-4 bg-gray-100 dark:bg-gray-700 rounded-md" style={{ height: '250px', overflowY: 'scroll' }}>
+
                                 <ul className="list-disc list-inside text-gray-800 dark:text-gray-200">
                                     {data.user_ids.map((userId) => {
                                         const user = users.find(u => u.id == userId);
