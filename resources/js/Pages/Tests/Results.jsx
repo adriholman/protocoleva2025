@@ -47,8 +47,6 @@ export default function Results() {
             return;
         }
 
-        console.log('Test data:', test);
-
         // Process general answers
         const generalAnswers = test.general_questions.reduce((acc, question) => {
             if (!question.answers) return acc;
@@ -65,8 +63,6 @@ export default function Results() {
             return acc;
         }, {});
 
-        console.log('General answers:', generalAnswers);
-
         // Prepare data for general charts
         const generalData = Object.keys(generalAnswers).map((question, index) => {
             const labels = Object.keys(generalAnswers[question]);
@@ -82,14 +78,12 @@ export default function Results() {
                         backgroundColor: colors,
                         borderColor: colors.map(color => color.replace('0.2', '1')),
                         borderWidth: 1,
-                        barThickness: 10, // Adjust bar thickness
-                        maxBarThickness: 10, // Adjust max bar thickness
+                        barThickness: 20, // Adjust bar thickness
+                        maxBarThickness: 20, // Adjust max bar thickness
                     }],
                 },
             };
         });
-
-        console.log('General data:', generalData);
 
         setGeneralData(generalData);
 
@@ -109,8 +103,6 @@ export default function Results() {
             return acc;
         }, {});
 
-        console.log('Value answers:', valueAnswers);
-
         // Prepare data for value charts
         const valueData = Object.keys(valueAnswers).map((question, index) => {
             const labels = Object.keys(valueAnswers[question]);
@@ -126,14 +118,12 @@ export default function Results() {
                         backgroundColor: colors,
                         borderColor: colors.map(color => color.replace('0.2', '1')),
                         borderWidth: 1,
-                        barThickness: 10, // Adjust bar thickness
-                        maxBarThickness: 10, // Adjust max bar thickness
+                        barThickness: 20, // Adjust bar thickness
+                        maxBarThickness: 20, // Adjust max bar thickness
                     }],
                 },
             };
         });
-
-        console.log('Value data:', valueData);
 
         setValueData(valueData);
     }, [test]);
