@@ -10,7 +10,7 @@ class ValueQuestion extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['question', 'test_id'];
+    protected $fillable = ['name', 'test_id'];
 
     public function test()
     {
