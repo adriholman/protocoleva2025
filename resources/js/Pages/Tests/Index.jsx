@@ -35,7 +35,7 @@ export default function Index({ tests, csrf_token }) {
 
                         {/* Contenedor para Título y Botón */}
                         <div className="flex justify-between items-center mb-4">
-                            <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200">Lista de Tests</h3>
+                            <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200">Lista de Pruebas</h3>
                             {userRole === 'director' && (
                                 <Link
                                     href="/tests/create"
