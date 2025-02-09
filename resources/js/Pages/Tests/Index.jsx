@@ -103,11 +103,6 @@ export default function Index({ tests, csrf_token }) {
                                                                 <FaShareAlt size={20} />
                                                             </Link>
                                                         )}
-                                                        {test.status === 'finished' && (
-                                                            <Link href={`/tests/${test.id}/results`} className="text-blue-500 dark:text-blue-300 hover:scale-110 transition-transform" title="Ver Resultados">
-                                                                <FaChartBar size={20} />
-                                                            </Link>
-                                                        )}
                                                     </>
                                                 )}
                                                 {userRole === 'evaluator' && test.status === 'available' && test.users[0]?.pivot?.completed === 0 && (
