@@ -115,13 +115,18 @@ export default function Index({ tests, csrf_token }) {
                                                         <FaPlay size={20} />
                                                     </Link>
                                                 )}
+                                                {test.status === 'finished' && (
+                                                    <Link href={`/tests/${test.id}/results`} className="text-blue-500 dark:text-blue-300 hover:scale-110 transition-transform" title="Ver Resultados">
+                                                        <FaChartBar size={20} />
+                                                    </Link>
+                                                )}
                                             </div>
                                         </td>
                                     </tr>
                                 )) : (
                                     <tr>
                                         <td colSpan="5" className="border p-2 text-gray-800 dark:text-gray-200 text-center">
-                                            No se encontraron tests.
+                                            No se encontraron pruebas.
                                         </td>
                                     </tr>
                                 )}

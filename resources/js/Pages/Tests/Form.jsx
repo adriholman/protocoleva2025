@@ -51,7 +51,7 @@ export default function Form({ data, setData, errors, projects, handleSubmit, bu
 
             {/* Valores */}
             <div className="mb-4">
-                <label htmlFor="values" className="block text-gray-700 dark:text-gray-300">Valores</label>
+                <label htmlFor="values" className="block text-gray-700 dark:text-gray-300">Valores (separadas por comas)</label>
                 <input 
                     type="text" 
                     id="values"

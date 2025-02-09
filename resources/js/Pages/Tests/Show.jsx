@@ -18,7 +18,7 @@ export default function Show() {
                         {/* Título y Botón de Volver */}
                         <div className="flex justify-between items-center mb-6">
                             <h3 className="text-2xl font-semibold text-gray-800 dark:text-gray-200">
-                                Detalles del Test
+                                Detalles de la prueba
                             </h3>
                             <Link 
                                 href="/tests" 

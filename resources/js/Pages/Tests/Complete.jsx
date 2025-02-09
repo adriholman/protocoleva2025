@@ -21,7 +21,7 @@ export default function Complete() {
             <div className="py-12 flex justify-center">
                 <div className="bg-white shadow-sm sm:rounded-lg dark:bg-gray-800 p-6 w-full max-w-2xl">
                     <h3 className="text-xl font-semibold mb-6 text-center text-gray-800 dark:text-gray-200">
-                        Realizar Test: {test?.name}
+                        Realizar Prueba: {test?.name}
                     </h3>
 
                     {/* Descripción del Test */}

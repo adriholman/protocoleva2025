@@ -29,7 +29,7 @@ export default function Edit() {
             <Head title="Editar Prueba" />
             <div className="py-12 flex justify-center">
                 <div className="bg-white shadow-sm sm:rounded-lg dark:bg-gray-800 p-4 w-full max-w-lg">
-                    <h3 className="text-lg font-semibold mb-4 text-center text-gray-800 dark:text-gray-200">Editar Test</h3>
+                    <h3 className="text-lg font-semibold mb-4 text-center text-gray-800 dark:text-gray-200">Editar Prueba</h3>
                     <Form data={data} setData={setData} errors={errors} projects={projects} handleSubmit={handleSubmit} buttonText="Actualizar Test" />
                 </div>
             </div>
